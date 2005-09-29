@@ -1,0 +1,25 @@
+To-do list and milestone plan for tx_dubletfinder
+================================================
+
+Help for this extension is very welcome! Contact the author if you want to help in any way.
+
+If you find any bugs in this extension, please report them in the Typo3 bugtracker under the project tx_dubletfinder.
+
+Development speed of this extension mainly depends on whether it is funded. So if you'd like this extension to get developed quickly (or you need a certain feature), please sponsor the author.
+
+Items to do:
+------------
+- trim e-mail addresses
+- drop invalid e-mail addresses
+- finish the internationalization
+- improve comments in code
+- check write permissions for source and destination pages
+- use the group type of direct mail groups (fe_users, tt_address)
+- integrate the bo_dmail_cat_mgr into the extension
+- write a manual
+- publish this extension in the TER
+- add Boris Feldmann as member
+- add a benchmarking feature
+- add a feature to only process n duplicates (in order to avoid timeouts)
+- allow to (optionally) use subqueries to speed things up
+- rework the UI to improve usability
