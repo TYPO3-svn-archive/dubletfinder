@@ -55,8 +55,6 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	var $debug = false;
 
 	function modMenu()	{
-		global $LANG;
-
 		return Array(
 			'tx_dubletfinder_modfunc1_function' => '',
 		);
@@ -68,9 +66,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 
 		$output = 'Funktion: '.$this->getFunctionMenu();
 
-		$output .= '<h3>Was passiert in diesem Modul?</h3>'.chr(10);
-		$output .= '<p>Dieses Modul sucht in den ausgewählten Direct-Mail-Gruppen nach mehrfach vorkommenden E-Mail-Adressen.</p>'.chr(10);
-		$output .= '<p><strong>Details: </strong> Diese Extension verändert die Einträge in den Tabellen <code>tt_address</code> und <code>fe_users</code>. Ein Eintrag pro Adresse wird dann in die momentan ausgewählte Seite (PID&nbsp;'.$this->getPid().') verschoben, die anderen werden gelöscht. Dabei werden die Direct-Mail-Kategorien aller vorkommenden Einträge kombiniert. Wenn eine Adresse sowohl in <code>fe_users</code> als auch in <code>tt_address</code> vorkommt, bleibt nur der Eintrag in <code>fe_user erhalten.</code></p>'.chr(10);
+		$output .= '<h3>'.$LANG->getLL('heading_whatHappens').'</h3>'.chr(10);
+		$output .= '<p>'.$LANG->getLL('verbose_whatHappens1').'</p>'.chr(10);
+		$output .= '<p><strong>'.$LANG->getLL('heading_Details').':</strong> '.$LANG->getLL('verbose_whatHappens2a').$this->getPid().$LANG->getLL('verbose_whatHappens2b').'</p>'.chr(10);
 
 		$output .= $this->renderDebugCheckbox();
 		$output .= $this->renderCheckboxes();
@@ -94,6 +92,8 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	 * @access private
 	 */
 	function renderForm() {
+		global $LANG;
+
 	 	$dbResult = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			'title, pages',
 			'sys_dmail_group',
@@ -103,8 +103,8 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 			''
 		);
 	
-		$output = '<h3>Gruppen für die Suche auswählen</h3>'.chr(10);
-		$output .= '<p>Bitte wählen Sie eine oder mehrere Direct-Mail-Gruppen aus, in denen nach mehrfach vorkommenden Einträgen gesucht werden soll.</p>'.chr(10);
+		$output = '<h3>'.$LANG->getLL('heading_selectGroups').'</h3>'.chr(10);
+		$output .= '<p>'.$LANG->getLL('verbose_selectGroups').'</p>'.chr(10);
 		$output .= '<p>'.chr(10);
 		$output .= '<select name="groups[]" id="groups" multiple="multiple">';
 		
@@ -117,7 +117,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 			$GLOBALS['TYPO3_DB']->sql_free_result($dbResult);
 		}
 		
-		$output .= '</select> <input type="submit" value="Los!" /></p>';
+		$output .= '</select> <input type="submit" value="'.$LANG->getLL('label_submit').'" /></p>';
 		
 		return $output;
 	}
@@ -130,13 +130,15 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	 * @access private
 	 */
 	function renderDebugCheckbox() {
-		$output = '<h3>Debug-Modus einschalten</h3>'.chr(10);
-		$output .= '<p>Hier können Sie den Debug-Modus einschalten. Es werden dann Informationen angezeigt, die Ihnen helfen können, Fehler zu finden.</p>'.chr(10);
+		global $LANG;
+
+		$output = '<h3>'.$LANG->getLL('heading_debugMode').'</h3>'.chr(10);
+		$output .= '<p>'.$LANG->getLL('verbose_debugMode').'</p>'.chr(10);
 
 		$this->debug = t3lib_div::GPvar('debugMode');
 		
 		$output .= '<p>'.chr(10);
-		$output .= '<input type="checkbox" name="debugMode" id="debugMode" value="1"'.($this->debug ? ' checked="checked"' : '').' /><label for="debugMode"> Debug-Modus einschalten</label><br />'.chr(10);
+		$output .= '<input type="checkbox" name="debugMode" id="debugMode" value="1"'.($this->debug ? ' checked="checked"' : '').' /><label for="debugMode"> '.$LANG->getLL('label_debugMode').'</label><br />'.chr(10);
 		$output .= '</p>'.chr(10);
 		
 		return $output;
@@ -150,8 +152,10 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	 * @access private
 	 */
 	function renderCheckboxes() {
-		$output = '<h3>Datenbanktabellen auswählen</h3>'.chr(10);
-		$output .= '<p>Bitte wählen Sie aus, in welchen Tabellen nach Dubletten gesucht werden soll. Wenn Sie alle möglichen Dubletten finden möchten, lassen Sie einfach alles angewählt.</p>'.chr(10);
+		global $LANG;
+
+		$output = '<h3>'.$LANG->getLL('heading_selectTables').'</h3>'.chr(10);
+		$output .= '<p>'.$LANG->getLL('verbose_selectTables').'</p>'.chr(10);
 
 		if (t3lib_div::GPvar('submitted')) {
 			$useTables = t3lib_div::GPvar('useTables');
@@ -171,9 +175,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 
 		$output .= '<p>'.chr(10);
 		$output .= '<input type="hidden" name="submitted" value="1" />'.chr(10);
-		$output .= '<input type="checkbox" name="useTables[]" id="useCross" value="useCross"'.($this->useCross ? ' checked="checked"' : '').' /><label for="useCross"> Dubletten suchen, die sowohl in <code>fe_users</code> als auch in <code>tt_address</code> vorkommen</label><br />'.chr(10);
-		$output .= '<input type="checkbox" name="useTables[]" id="useFeUsers" value="useFeUsers"'.($this->useFeUsers ? ' checked="checked"' : '').' /><label for="useFeUsers"> Dubletten in <code>fe_users</code> suchen</label><br />'.chr(10);
-		$output .= '<input type="checkbox" name="useTables[]" id="useAddress" value="useAddress"'.($this->useAddress ? ' checked="checked"' : '').' /><label for="useAddress"> Dubletten in <code>tt_address</code> suchen</label>'.chr(10);
+		$output .= '<input type="checkbox" name="useTables[]" id="useCross" value="useCross"'.($this->useCross ? ' checked="checked"' : '').' /><label for="useCross"> '.$LANG->getLL('label_useCross').'</label><br />'.chr(10);
+		$output .= '<input type="checkbox" name="useTables[]" id="useFeUsers" value="useFeUsers"'.($this->useFeUsers ? ' checked="checked"' : '').' /><label for="useFeUsers"> '.$LANG->getLL('label_useFeUsers').'</label><br />'.chr(10);
+		$output .= '<input type="checkbox" name="useTables[]" id="useAddress" value="useAddress"'.($this->useAddress ? ' checked="checked"' : '').' /><label for="useAddress"> '.$LANG->getLL('label_useAddress').'</label>'.chr(10);
 		$output .= '</p>'.chr(10);
 		
 		return $output;
@@ -187,12 +191,14 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	 * @access private
 	 */
 	function removeAllDublets() {
-		$output = '<h3>Ergebnisse</h3>'.chr(10);
+		global $LANG;
+
+		$output = '<h3>'.$LANG->getLL('heading_results').'</h3>'.chr(10);
 	
 		if ($this->useCross) {
 			$dbResult = $this->getCrossDublets();
 			if ($dbResult) {
-				$output .= '<h4>Es gibt '.$GLOBALS['TYPO3_DB']->sql_num_rows($dbResult).' Dublette(n), die sowohl in <code>fe_users</code> als auch in <code>tt_address</code> vorkommen:</h4>';
+				$output .= '<h4>'.$LANG->getLL('heading_thereAre').$GLOBALS['TYPO3_DB']->sql_num_rows($dbResult).$LANG->getLL('heading_crossDublets').':</h4>';
 				
 				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
 					$output .= '<p>'.$row['email'];
@@ -211,7 +217,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 		if ($this->useFeUsers) {
 			$dbResult = $this->getFeUsersDublets();
 			if ($dbResult) {
-				$output .= '<h4>Es gibt '.$GLOBALS['TYPO3_DB']->sql_num_rows($dbResult).' Dublette(n) in <code>fe_users</code>:</h4>';
+				$output .= '<h4>'.$LANG->getLL('heading_thereAre').$GLOBALS['TYPO3_DB']->sql_num_rows($dbResult).$LANG->getLL('heading_FeUsersDublets').':</h4>';
 				
 				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
 					$output .= '<p>'.$row['email'].' ('.$row['numbers'].')';
@@ -230,7 +236,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 		if ($this->useAddress) {
 			$dbResult = $this->getAddressDublets();
 			if ($dbResult) {
-				$output .= '<h4>Es gibt '.$GLOBALS['TYPO3_DB']->sql_num_rows($dbResult).' Dublette(n) in <code>tt_address</code>:</h4>';
+				$output .= '<h4>'.$LANG->getLL('heading_thereAre').$GLOBALS['TYPO3_DB']->sql_num_rows($dbResult).$LANG->getLL('heading_AddressDublets').':</h4>';
 				
 				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
 					$output .= '<p>'.$row['email'].' ('.$row['numbers'].')';
@@ -276,6 +282,8 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	 * @access private
 	 */
 	function reduceFeUsersDublet($email) {
+		global $LANG;
+
 		$output = '';
 		$combinedCategories = 0;
 		$firstUid = 0;
@@ -293,7 +301,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 		
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
 			if ($this->debug) {
-				$output .= ': UID: '.$row['uid'].', PID: '.$row['pid'].', Kategorie: '.$row['category'].'; ';
+				$output .= ': UID: '.$row['uid'].', PID: '.$row['pid'].', '.$LANG->getLL('label_category').': '.$row['category'].'; ';
 			}
 			$combinedCategories |= $row['category'];
 			
@@ -362,6 +370,8 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	 * @access private
 	 */
 	function reduceAddressDublet($email) {
+		global $LANG;
+
 		$output = '';
 		$combinedCategories = 0;
 		$firstUid = 0;
@@ -379,7 +389,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 		
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
 			if ($this->debug) {
-				$output .= ': UID: '.$row['uid'].', PID: '.$row['pid'].', Kategorie: '.$row['category'].'; ';
+				$output .= ': UID: '.$row['uid'].', PID: '.$row['pid'].', '.$LANG->getLL('label_category').': '.$row['category'].'; ';
 			}
 			$combinedCategories |= $row['category'];
 			
@@ -450,6 +460,8 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	 * @access private
 	 */
 	function reduceCrossDublet($email) {
+		global $LANG;
+
 		$output = '';
 		$combinedCategories = 0;
 		$firstUid = 0;
@@ -466,7 +478,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 		);
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
 			if ($this->debug) {
-				$output .= ': UID: '.$row['uid'].', PID: '.$row['pid'].', Kategorie: '.$row['category'].'; ';
+				$output .= ': UID: '.$row['uid'].', PID: '.$row['pid'].', '.$LANG->getLL('label_category').': '.$row['category'].'; ';
 			}
 			$combinedCategories |= $row['category'];
 			
@@ -607,6 +619,8 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	 * @access private
 	 */
 	function getFunctionMenu() {
+		global $LANG;
+
 		$output = '<select name="SET[tx_dubletfinder_modfunc1_function]">'.chr(10);
 		$output .= '  <option value="dryrun" selected="selected">Testlauf: nur suchen, nichts ändern</option>'.chr(10);
 		$output .= '  <option value="live">Ausführen: suchen und verschieben/löschen</option>'.chr(10);
@@ -646,6 +660,8 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	 * @access private
 	 */
 	function createRecursivePageList() {
+		global $LANG;
+
 		$output = '';
 	
 		$collectivePageList = $this->pageList;
