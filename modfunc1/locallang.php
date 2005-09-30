@@ -9,10 +9,10 @@ $LOCAL_LANG = Array (
 	'default' => Array (
 		'title' => 'Dublet Finder',	
 
-		'label_debugMode' => 'enable debug mode',
-		'label_useCross' => 'search for duplicates that occur in <code>fe_users</code> as well as in <code>tt_address</code>',
-		'label_useFeUsers' => 'search for duplicates within <code>fe_users</code>',
-		'label_useAddress' => 'search for duplicates within <code>tt_address</code>',
+		'label_debugMode' => 'Enable debug mode',
+		'label_useCross' => 'Search for duplicates that occur in <code>fe_users</code> as well as in <code>tt_address</code>',
+		'label_useFeUsers' => 'Search for duplicates within <code>fe_users</code>',
+		'label_useAddress' => 'Search for duplicates within <code>tt_address</code>',
 		'label_submit' => 'Let\'s go!',
 		'label_category' => 'category',
 
