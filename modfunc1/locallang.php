@@ -7,18 +7,29 @@
 
 $LOCAL_LANG = Array (
 	'default' => Array (
-		'title' => 'Dublet Finder',	
+		'title' => 'Dublet Finder',
 
+		'label_modeDryrun' => 'Dry run: only search, don\'t actually change anything',
+		'label_modeLive' => 'Execture: search and write changes to DB',
 		'label_debugMode' => 'Enable debug mode',
 		'label_useCross' => 'Search for duplicates that occur in <code>fe_users</code> as well as in <code>tt_address</code>',
 		'label_useFeUsers' => 'Search for duplicates within <code>fe_users</code>',
 		'label_useAddress' => 'Search for duplicates within <code>tt_address</code>',
 		'label_submit' => 'Let\'s go!',
 		'label_category' => 'category',
+		'label_combinedCategories' => 'Combined categories',
+		'label_keepUid' => 'Keeping UID ',
+		'label_keepFeUsersUid' => 'Keeping <code>fe_users</code> UID ',
+		'label_deletingAllOthers' => 'deleting all others',
+		'label_deletingAllOthersFromBoth' => 'deleting all others from <code>fe_users</code> as well as <code>tt_address</code>',
+		'label_writingChangesTo' => 'Writing changes to',
+		'label_whereClause' => 'WHERE clause',
+		'label_pagesList' => 'Pages in the Direct Mail groups',
+		'label_pagesListRecursive' => 'Recursive list of pages',
 
-		'heading_whatHappens' => 'What does this module do?',	
-		'heading_selectGroups' => 'Select groups for the search',	
-		'heading_debugMode' => 'Debug mode',	
+		'heading_whatHappens' => 'What does this module do?',
+		'heading_selectGroups' => 'Select groups for the search',
+		'heading_debugMode' => 'Debug mode',
 		'heading_selectTables' => 'Select database tables',
 		'heading_results' => 'Results',
 		'heading_Details' => 'Details',
@@ -33,19 +44,32 @@ $LOCAL_LANG = Array (
 		'verbose_selectGroups' => 'Please select one or more Direct Mail groups which will be searched for duplicate addresses.',
 		'verbose_debugMode' => 'Here you can toggle the debug mode. When the debug mode is enabled, the module displays information that can help you in tracking down problems.',
 		'verbose_selectTables' => 'Please select which tables should be searched for duplicates. If you want to find all duplicates, just leave all items checked.',
+
+		'message_notCorrectlyDeleted' => 'This record has not been deleted correctly from <code>tt_address</code>!',
 	),
 	'dk' => Array (
 	),
 	'de' => Array (
 		'title' => 'Dublettenfinder',
-		
+
+		'label_modeDryrun' => 'Testlauf: nur suchen, nichts ändern',
+		'label_modeLive' => 'Ausführen: suchen und Änderungen in die DB schreiben',
 		'label_debugMode' => 'Debug-Modus einschalten',
 		'label_useCross' => 'Dubletten suchen, die sowohl in <code>fe_users</code> als auch in <code>tt_address</code> vorkommen',
 		'label_useFeUsers' => 'Dubletten innerhalb von <code>fe_users</code> suchen',
 		'label_useAddress' => 'Dubletten innerhalb von <code>tt_address</code> suchen',
 		'label_submit' => 'Los!',
 		'label_category' => 'Kategorie',
-		
+		'label_combinedCategories' => 'Kombinierte Kategorien',
+		'label_keepUid' => 'Behalte UID ',
+		'label_keepFeUsersUid' => 'Behalte <code>fe_users</code>-UID ',
+		'label_deletingAllOthers' => 'lösche alle anderen',
+		'label_deletingAllOthersFromBoth' => 'lösche alle anderen aus <code>fe_users</code> sowie <code>tt_address</code>',
+		'label_writingChangesTo' => 'Writing changes to',
+		'label_whereClause' => 'WHERE-Klausel',
+		'label_pagesList' => 'Seiten in den Direct-Mail-Gruppen',
+		'label_pagesListRecursive' => 'Rekursive Seitenliste',
+
 		'heading_whatHappens' => 'Was passiert in diesem Modul?',
 		'heading_selectGroups' => 'Gruppen für die Suche auswählen',
 		'heading_debugMode' => 'Debug-Modus einschalten',
@@ -56,13 +80,15 @@ $LOCAL_LANG = Array (
 		'heading_crossDublets' => ' Dublette(n), die sowohl in <code>fe_users</code> als auch in <code>tt_address</code> vorkommen',
 		'heading_FeUsersDublets' => ' Dublette(n) innerhalb von <code>fe_users</code>',
 		'heading_AddressDublets' => ' Dublette(n) innerhalb von <code>tt_address</code>',
-		
+
 		'verbose_whatHappens1' => 'Dieses Modul sucht in den ausgewählten Direct-Mail-Gruppen nach mehrfach vorkommenden E-Mail-Adressen (sowohl innerhalb einer Gruppe als auch gruppenübergreifend).',
 		'verbose_whatHappens2a' => 'Dieses Modul verändert die Einträge in den Tabellen <code>tt_address</code> und <code>fe_users</code>. Ein Eintrag pro Adresse wird dann in die momentan ausgewählte Seite (PID&nbsp;',
 		'verbose_whatHappens2b' => ') verschoben, die anderen werden gelöscht. Dabei werden die Direct-Mail-Kategorien aller vorkommenden Einträge kombiniert. Wenn eine Adresse sowohl in <code>fe_users</code> als auch in <code>tt_address</code> vorkommt, bleibt nur der Eintrag in <code>fe_user</code> erhalten.',
 		'verbose_selectGroups' => 'Bitte wählen Sie eine oder mehrere Direct-Mail-Gruppen aus, in denen nach mehrfach vorkommenden Einträgen gesucht werden soll.',
 		'verbose_debugMode' => 'Hier können Sie den Debug-Modus einschalten. Es werden dann Informationen angezeigt, die Ihnen helfen können, Fehler zu finden.',
 		'verbose_selectTables' => 'Bitte wählen Sie aus, in welchen Tabellen nach Dubletten gesucht werden soll. Wenn Sie alle möglichen Dubletten finden möchten, lassen Sie einfach alles angewählt.',
+		
+		'message_notCorrectlyDeleted' => 'Dieser Datensatz wurde nicht korrekt aus <code>tt_address</code> gelöscht!',
 	),
 	'no' => Array (
 	),

@@ -2,9 +2,9 @@
 
 ########################################################################
 # Extension Manager/Repository config file for ext: "dubletfinder"
-# 
+#
 # Auto generated 19-08-2005 22:04
-# 
+#
 # Manual updates:
 # Only the data in the array - anything else is removed by next write
 ########################################################################
