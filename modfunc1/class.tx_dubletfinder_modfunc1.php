@@ -60,6 +60,11 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 		);
 	}
 
+	/**
+	 * Initializes the whole shebang.
+	 *
+	 * @access public
+	 */
 	function main()	{
 		// Initializes the module. Done in this function because we may need to re-initialize if data is submitted!
 		global $SOBE,$BE_USER,$LANG,$BACK_PATH,$TCA_DESCR,$TCA,$CLIENT,$TYPO3_CONF_VARS;
@@ -275,6 +280,8 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	}
 
 	/**
+	 * Deletes a dublet from fe_users (and deletes all corresponding entries in tt_address).
+	 *
 	 * @param	String		email address that has more than one fe_users record
 	 *
 	 * @return	String		status output
@@ -363,6 +370,8 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	}
 
 	/**
+	 * Deletes a dublet from tt_address, keeping just one occurence.
+	 *
 	 * @param	String		email address that has more than one tt_address record
 	 *
 	 * @return	String		status output
@@ -453,6 +462,8 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	}
 
 	/**
+	 * Deletes a dublet from fe_users (and deletes all corresponding entries in tt_address).
+	 *
 	 * @param	String		email address that is in tt_address and fe_users
 	 *
 	 * @return	String		status output
@@ -711,7 +722,6 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	function fullQuoteStr($str)	{
 		return '\''.addslashes($str).'\'';
 	}
-
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/dubletfinder/modfunc1/class.tx_dubletfinder_modfunc1.php'])	 {
