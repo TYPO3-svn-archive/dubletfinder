@@ -54,6 +54,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	/** set to true to switch debug output on */
 	var $debug;
 
+	/** boolean: whether to trim the email addresses first */
+	var $doTrim;
+
 	function modMenu()	{
 		return Array(
 			'tx_dubletfinder_modfunc1_function' => '',
@@ -76,13 +79,20 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 		$output .= '<p><strong>'.$LANG->getLL('heading_Details').':</strong> '.$LANG->getLL('verbose_whatHappens2a').$this->getPid().$LANG->getLL('verbose_whatHappens2b').'</p>'.chr(10);
 
 		$output .= $this->renderDebugCheckbox();
+		$output .= $this->renderCleanup();
 		$output .= $this->renderCheckboxes();
 
 		$this->retrieveFormData();
 		$output .= $this->renderForm();
 
+		$output .= '<h3>'.$LANG->getLL('heading_results').'</h3>'.chr(10);
+		$output .= $this->createRecursivePageList();
+
+		if ($this->doTrim) {
+			$output .= $this->trimEmail();
+		}
+
 		if ($this->checkForm()) {
-			$output .= $this->createRecursivePageList();
 			$output .= $this->removeAllDublets();
 		}
 
@@ -150,6 +160,28 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	}
 
 	/**
+	 * Renders the cleanup checkboxes (they are non-checked by default)
+	 *
+	 * @return	String		HTML output (won't be empty)
+	 *
+	 * @access private
+	 */
+	function renderCleanup() {
+		global $LANG;
+
+		$output = '<h3>'.$LANG->getLL('heading_trim').'</h3>'.chr(10);
+		$output .= '<p>'.$LANG->getLL('verbose_trim').'</p>'.chr(10);
+
+		$this->doTrim = t3lib_div::GPvar('doTrim');
+
+		$output .= '<p>'.chr(10);
+		$output .= '<input type="checkbox" name="doTrim" id="doTrim" value="1"'.($this->doTrim ? ' checked="checked"' : '').' /><label for="doTrim"> '.$LANG->getLL('label_trim').'</label><br />'.chr(10);
+		$output .= '</p>'.chr(10);
+
+		return $output;
+	}
+
+	/**
 	 * Renders the checkboxes that select which tables should be searched.
 	 *
 	 * @return	String		HTML output (won't be empty)
@@ -198,7 +230,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	function removeAllDublets() {
 		global $LANG;
 
-		$output = '<h3>'.$LANG->getLL('heading_results').'</h3>'.chr(10);
+		$output = '';
 
 		if ($this->useCross) {
 			$dbResult = $this->getCrossDublets();
@@ -581,6 +613,74 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 					$output .= '<br /><strong>'.$LANG->getLL('message_notCorrectlyDeleted').'</strong>';
 				}
 			}
+		}
+
+		return $output;
+	}
+
+	/**
+	 * Trims the email addresses in tt_address and fe_users
+	 *
+	 * @return	String		status output
+	 *
+	 * @access private
+	 */
+	function trimEmail() {
+		$output = $this->trimEmailInTable('tt_address');
+		$output .= $this->trimEmailInTable('fe_users');
+
+		return $output;
+	}
+
+	/**
+	 * Trims the email addresses in a database table
+	 *
+	 * @param	String		name of the database table to use (should be tt_address or fe_users)
+	 *
+	 * @return	String		status output
+	 *
+	 * @access private
+	 */
+	function trimEmailInTable($tableName) {
+		global $LANG;
+
+		$output = '';
+
+	 	$dbResult = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+			'uid, email',
+			$tableName,
+			'pid IN ('.$this->pageListRecursive.')'
+				.t3lib_pageSelect::enableFields($tableName),
+			'',
+			'',
+			''
+		);
+
+		if ($dbResult) {
+			$output .= '<h4>'.$LANG->getLL('heading_trimTable').' <code>'.$tableName.'</code>:</h4>'.chr(10);
+
+			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
+				$currentEmail = $row['email'];
+				$trimmedEmail = trim($currentEmail);
+
+				if ($currentEmail !== $trimmedEmail) {
+					if ($this->debug) {
+						$output .= 'UID: '.$row['uid'].', ';
+					}
+					$output .= htmlspecialchars($trimmedEmail).'<br />'.chr(10);
+
+					if ($this->isLive()) {
+					 	$updateResult = $GLOBALS['TYPO3_DB']->exec_UPDATEquery(
+					 		$tableName,
+							'uid='.intval($row['uid']),
+							array(
+								'email' => $trimmedEmail
+							)
+						);
+					}
+				}
+			}
+			$GLOBALS['TYPO3_DB']->sql_free_result($dbResult);
 		}
 
 		return $output;
