@@ -24,3 +24,4 @@ Items to do:
 - feature: check e-mail addresses for a MX entry for that domain
 - check whether we have used htmlspecialchars() in all necessary places
 - investigate whether we can use TYPO3's feature to find subpages recursively
+- if not records apply to an operation, display a message instead of a heading with nothing beneath it
