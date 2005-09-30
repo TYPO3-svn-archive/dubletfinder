@@ -1,5 +1,5 @@
 To-do list and milestone plan for tx_dubletfinder
-================================================
+=================================================
 
 Help for this extension is very welcome! Contact the author if you want to help in any way.
 
@@ -9,7 +9,6 @@ Development speed of this extension mainly depends on whether it is funded. So i
 
 Items to do:
 ------------
-- trim e-mail addresses
 - drop invalid e-mail addresses
 - check write permissions for source and destination pages
 - use the group type of direct mail groups (fe_users, tt_address)
@@ -19,5 +18,10 @@ Items to do:
 - add Boris Feldmann as member
 - add a benchmarking feature
 - add a feature to only process n duplicates (in order to avoid timeouts)
-- allow to (optionally) use subqueries to speed things up
+- allow to (optionally) use subqueries from MySQL 4.1 to speed the search for cross-table duplicates up
 - rework the UI to improve usability
+- make the HTML output prettier
+- make the FE output prettier (with and without debug mode)
+- feature: check e-mail addresses for a MX entry for that domain
+- check whether we have used htmlspecialchars() in all necessary places
+- investigate whether we can use TYPO3's feature to find subpages recursively
