@@ -56,6 +56,8 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 
 	/** boolean: whether to trim the email addresses first */
 	var $doTrim;
+	/** boolean: whether to delete obviously invalid email addresses first */
+	var $doRemoveInvalid;
 
 	function modMenu()	{
 		return Array(
@@ -90,6 +92,10 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 
 		if ($this->doTrim) {
 			$output .= $this->trimEmail();
+		}
+
+		if ($this->doRemoveInvalid) {
+			$output .= $this->removeInvalidEmail();
 		}
 
 		if ($this->checkForm()) {
@@ -169,13 +175,15 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	function renderCleanup() {
 		global $LANG;
 
-		$output = '<h3>'.$LANG->getLL('heading_trim').'</h3>'.chr(10);
-		$output .= '<p>'.$LANG->getLL('verbose_trim').'</p>'.chr(10);
+		$output = '<h3>'.$LANG->getLL('heading_cleanUpEmail').'</h3>'.chr(10);
+		$output .= '<p>'.$LANG->getLL('verbose_cleanUpEmail').'</p>'.chr(10);
 
 		$this->doTrim = t3lib_div::GPvar('doTrim');
+		$this->doRemoveInvalid = t3lib_div::GPvar('doRemoveInvalid');
 
 		$output .= '<p>'.chr(10);
 		$output .= '<input type="checkbox" name="doTrim" id="doTrim" value="1"'.($this->doTrim ? ' checked="checked"' : '').' /><label for="doTrim"> '.$LANG->getLL('label_trim').'</label><br />'.chr(10);
+		$output .= '<input type="checkbox" name="doRemoveInvalid" id="doRemoveInvalid" value="1"'.($this->doRemoveInvalid ? ' checked="checked"' : '').' /><label for="doRemoveInvalid"> '.$LANG->getLL('label_deleteInvalid').'</label>'.chr(10);
 		$output .= '</p>'.chr(10);
 
 		return $output;
@@ -675,6 +683,79 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 							'uid='.intval($row['uid']),
 							array(
 								'email' => $trimmedEmail
+							)
+						);
+					}
+				}
+			}
+			$GLOBALS['TYPO3_DB']->sql_free_result($dbResult);
+		}
+
+		return $output;
+	}
+
+	/**
+	 * Removes invalid email addresses in tt_address and fe_users
+	 *
+	 * @return	String		status output
+	 *
+	 * @access private
+	 */
+	function removeInvalidEmail() {
+		$output = $this->removeInvalidEmailInTable('tt_address');
+		$output .= $this->removeInvalidEmailInTable('fe_users');
+
+		return $output;
+	}
+
+	/**
+	 * Removes invalid email addresses in a database table
+	 *
+	 * @param	String		name of the database table to use (should be tt_address or fe_users)
+	 *
+	 * @return	String		status output
+	 *
+	 * @access private
+	 */
+	function removeInvalidEmailInTable($tableName) {
+		global $LANG;
+		$regex = '/^([*+!.&#$|\'\\%\/0-9a-z^_`{}=?~:-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,4})$/i';
+
+		$output = '';
+
+	 	$dbResult = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+			'uid, email',
+			$tableName,
+			'pid IN ('.$this->pageListRecursive.')'
+				.t3lib_pageSelect::enableFields($tableName),
+			'',
+			'',
+			''
+		);
+
+		if ($dbResult) {
+			$output .= '<h4>'.$LANG->getLL('heading_deleteInvalidFromTable').' <code>'.$tableName.'</code>:</h4>'.chr(10);
+
+			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
+				$currentEmail = trim($row['email']);
+				$matches = array();
+				$match = preg_match($regex, $currentEmail, $matches);
+
+				// only act if:
+				// 1. the e-mail address isn't empty, and
+				// 2. the pattern doesn't match exactly.
+				if (!empty($currentEmail) && (!$match || ($matches[0] !== $currentEmail))) {
+					if ($this->debug) {
+						$output .= 'UID: '.$row['uid'].', ';
+					}
+					$output .= htmlspecialchars($currentEmail).'<br />'.chr(10);
+
+					if ($this->isLive()) {
+					 	$updateResult = $GLOBALS['TYPO3_DB']->exec_UPDATEquery(
+					 		$tableName,
+							'uid='.intval($row['uid']),
+							array(
+								'deleted' => 1,
 							)
 						);
 					}

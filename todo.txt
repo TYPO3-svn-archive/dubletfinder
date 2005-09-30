@@ -9,7 +9,6 @@ Development speed of this extension mainly depends on whether it is funded. So i
 
 Items to do:
 ------------
-- drop invalid e-mail addresses
 - check write permissions for source and destination pages
 - use the group type of direct mail groups (fe_users, tt_address)
 - integrate the bo_dmail_cat_mgr into the extension
