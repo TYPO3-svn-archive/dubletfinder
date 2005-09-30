@@ -1,5 +1,5 @@
-To-do list and milestone plan for tx_dubletfinder
-=================================================
+To-do list for tx_dubletfinder
+==============================
 
 Help for this extension is very welcome! Contact the author if you want to help in any way.
 
