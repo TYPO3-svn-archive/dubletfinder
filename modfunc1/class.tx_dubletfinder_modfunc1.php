@@ -52,7 +52,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	var $useAddress;
 
 	/** set to true to switch debug output on */
-	var $debug = false;
+	var $debug;
 
 	function modMenu()	{
 		return Array(
