@@ -246,7 +246,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 				$output .= '<h4>'.$LANG->getLL('heading_thereAre').$GLOBALS['TYPO3_DB']->sql_num_rows($dbResult).$LANG->getLL('heading_crossDublets').':</h4>';
 
 				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
-					$output .= '<p>'.$row['email'];
+					$output .= '<p>'.htmlentities($row['email']);
 					if ($this->isLive()) {
 						$output .= $this->reduceCrossDublet($row['email']);
 					}
@@ -265,7 +265,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 				$output .= '<h4>'.$LANG->getLL('heading_thereAre').$GLOBALS['TYPO3_DB']->sql_num_rows($dbResult).$LANG->getLL('heading_FeUsersDublets').':</h4>';
 
 				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
-					$output .= '<p>'.$row['email'].' ('.$row['numbers'].')';
+					$output .= '<p>'.htmlentities($row['email']).' ('.intval($row['numbers']).')';
 					if ($this->isLive()) {
 						$output .= $this->reduceFeUsersDublet($row['email']);
 					}
@@ -284,7 +284,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 				$output .= '<h4>'.$LANG->getLL('heading_thereAre').$GLOBALS['TYPO3_DB']->sql_num_rows($dbResult).$LANG->getLL('heading_AddressDublets').':</h4>';
 
 				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
-					$output .= '<p>'.$row['email'].' ('.$row['numbers'].')';
+					$output .= '<p>'.htmlentities($row['email']).' ('.intval($row['numbers']).')';
 					if ($this->isLive()) {
 						$output .= $this->reduceAddressDublet($row['email']);
 					}
@@ -348,7 +348,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
 			if ($this->debug) {
-				$output .= ': UID: '.$row['uid'].', PID: '.$row['pid'].', '.$LANG->getLL('label_category').': '.$row['category'].'; ';
+				$output .= ': UID: '.intval($row['uid']).', PID: '.intval($row['pid']).', '.$LANG->getLL('label_category').': '.intval($row['category']).'; ';
 			}
 			$combinedCategories |= $row['category'];
 
@@ -438,7 +438,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
 			if ($this->debug) {
-				$output .= ': UID: '.$row['uid'].', PID: '.$row['pid'].', '.$LANG->getLL('label_category').': '.$row['category'].'; ';
+				$output .= ': UID: '.intval($row['uid']).', PID: '.intval($row['pid']).', '.$LANG->getLL('label_category').': '.intval($row['category']).'; ';
 			}
 			$combinedCategories |= $row['category'];
 
@@ -529,7 +529,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 		);
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
 			if ($this->debug) {
-				$output .= ': UID: '.$row['uid'].', PID: '.$row['pid'].', '.$LANG->getLL('label_category').': '.$row['category'].'; ';
+				$output .= ': UID: '.intval($row['uid']).', PID: '.intval($row['pid']).', '.$LANG->getLL('label_category').': '.intval($row['category']).'; ';
 			}
 			$combinedCategories |= $row['category'];
 
@@ -553,7 +553,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 			);
 			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
 				if ($this->debug) {
-					$output .= ': UID: '.$row['uid'].', PID: '.$row['pid'].', '.$LANG->getLL('label_category').': '.$row['category'].'; ';
+					$output .= ': UID: '.intval($row['uid']).', PID: '.intval($row['pid']).', '.$LANG->getLL('label_category').': '.intval($row['category']).'; ';
 				}
 				$combinedCategories |= $row['category'];
 			}
@@ -589,9 +589,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 
 			if ($this->debug) {
 				$output .= '<br /><strong>'.$LANG->getLL('label_whereClause').': </strong>';
-				$output .= 'email='.$this->fullQuoteStr($email)
+				$output .= htmlentities('email='.$this->fullQuoteStr($email)
 						.' AND pid IN ('.$this->pageListRecursive.')'
-						.t3lib_pageSelect::enableFields('tt_address')
+						.t3lib_pageSelect::enableFields('tt_address'))
 						.'<br /><br />';
 			}
 			// delete all other occurences in tt_address
@@ -673,9 +673,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 
 				if ($currentEmail !== $trimmedEmail) {
 					if ($this->debug) {
-						$output .= 'UID: '.$row['uid'].', ';
+						$output .= 'UID: '.intval($row['uid']).', ';
 					}
-					$output .= htmlspecialchars($trimmedEmail).'<br />'.chr(10);
+					$output .= '['.htmlentities($currentEmail).'] -&gt; ['.htmlentities($trimmedEmail).']'.'<br />'.chr(10);
 
 					if ($this->isLive()) {
 					 	$updateResult = $GLOBALS['TYPO3_DB']->exec_UPDATEquery(
@@ -746,9 +746,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 				// 2. the pattern doesn't match exactly.
 				if (!empty($currentEmail) && (!$match || ($matches[0] !== $currentEmail))) {
 					if ($this->debug) {
-						$output .= 'UID: '.$row['uid'].', ';
+						$output .= 'UID: '.intval($row['uid']).', ';
 					}
-					$output .= htmlspecialchars($currentEmail).'<br />'.chr(10);
+					$output .= htmlentities($currentEmail).'<br />'.chr(10);
 
 					if ($this->isLive()) {
 					 	$updateResult = $GLOBALS['TYPO3_DB']->exec_UPDATEquery(
@@ -875,7 +875,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 				if (!empty($currentPageList)) {
 					$currentPageList .= ',';
 				}
-				$currentPageList .= $row['uid'];
+				$currentPageList .= intval($row['uid']);
 			}
 			$GLOBALS['TYPO3_DB']->sql_free_result($dbResult);
 			if (!empty($currentPageList)) {
