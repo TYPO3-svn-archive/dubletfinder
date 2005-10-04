@@ -651,6 +651,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	 */
 	function trimEmailInTable($tableName) {
 		global $LANG;
+		$regex = '/^((\'|\"|&nbsp;)*)([^\"\'&]+)((\'|\"|&nbsp;)*)$/';
 
 		$output = '';
 
@@ -670,19 +671,25 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
 				$currentEmail = $row['email'];
 				$trimmedEmail = trim($currentEmail);
+				$matches = array();
+				if (preg_match($regex, $trimmedEmail, $matches)) {
+					$betterTrimmedEmail = $matches[3]; 
+				} else {
+					$betterTrimmedEmail = $trimmedEmail; 
+				}
 
-				if ($currentEmail !== $trimmedEmail) {
+				if ($currentEmail !== $betterTrimmedEmail) {
 					if ($this->debug) {
 						$output .= 'UID: '.intval($row['uid']).', ';
 					}
-					$output .= '['.htmlentities($currentEmail).'] -&gt; ['.htmlentities($trimmedEmail).']'.'<br />'.chr(10);
+					$output .= '['.htmlentities($currentEmail).'] -&gt; ['.htmlentities($betterTrimmedEmail).']'.'<br />'.chr(10);
 
 					if ($this->isLive()) {
 					 	$updateResult = $GLOBALS['TYPO3_DB']->exec_UPDATEquery(
 					 		$tableName,
 							'uid='.intval($row['uid']),
 							array(
-								'email' => $trimmedEmail
+								'email' => $betterTrimmedEmail
 							)
 						);
 					}
