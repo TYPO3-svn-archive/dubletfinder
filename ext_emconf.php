@@ -11,7 +11,7 @@
 
 $EM_CONF[$_EXTKEY] = Array (
 	'title' => 'Dublet Finder',
-	'description' => 'This extension finds entries from tt_address and fe_users that share the same email address (dublets/duplicates/double entries) and deletes all but one (for each address), merging the flags in the process. The remaining entry is moved to a different page.',
+	'description' => 'This extension finds entries from tt_address and fe_users that share the same e-mail address (dublets/duplicates/double entries) and deletes all but one (for each address), merging the flags in the process. The remaining entry is moved to a different page.',
 	'category' => 'module',
 	'author' => 'Oliver Klee',
 	'author_email' => 'typo3-coding@oliverklee.de',

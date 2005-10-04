@@ -54,9 +54,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	/** set to true to switch debug output on */
 	var $debug;
 
-	/** boolean: whether to trim the email addresses first */
+	/** boolean: whether to trim the e-mail addresses first */
 	var $doTrim;
-	/** boolean: whether to delete obviously invalid email addresses first */
+	/** boolean: whether to delete obviously invalid e-mail addresses first */
 	var $doRemoveInvalid;
 
 	function modMenu()	{
@@ -301,7 +301,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	}
 
 	/**
-	 * Gets DB query of email addresses that appear in fe_users more than once.
+	 * Gets DB query of e-mail addresses that appear in fe_users more than once.
 	 *
 	 * @return	object		DB result object (for a row)
 	 *
@@ -322,7 +322,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	/**
 	 * Deletes a dublet from fe_users (and deletes all corresponding entries in tt_address).
 	 *
-	 * @param	String		email address that has more than one fe_users record
+	 * @param	String		e-mail address that has more than one fe_users record
 	 *
 	 * @return	String		status output
 	 *
@@ -391,7 +391,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	}
 
 	/**
-	 * Gets DB query of email addresses that appear in tt_address more than once.
+	 * Gets DB query of e-mail addresses that appear in tt_address more than once.
 	 *
 	 * @return	object		DB result object (for a row)
 	 *
@@ -412,7 +412,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	/**
 	 * Deletes a dublet from tt_address, keeping just one occurence.
 	 *
-	 * @param	String		email address that has more than one tt_address record
+	 * @param	String		e-mail address that has more than one tt_address record
 	 *
 	 * @return	String		status output
 	 *
@@ -481,7 +481,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	}
 
 	/**
-	 * Gets DB query of email addresses that appear in tt_address _and_ fe_users
+	 * Gets DB query of e-mail addresses that appear in tt_address _and_ fe_users
 	 *
 	 * @return	object		DB result object (for a row)
 	 *
@@ -504,7 +504,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	/**
 	 * Deletes a dublet from fe_users (and deletes all corresponding entries in tt_address).
 	 *
-	 * @param	String		email address that is in tt_address and fe_users
+	 * @param	String		e-mail address that is in tt_address and fe_users
 	 *
 	 * @return	String		status output
 	 *
@@ -627,7 +627,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	}
 
 	/**
-	 * Trims the email addresses in tt_address and fe_users
+	 * Trims the e-mail addresses in tt_address and fe_users
 	 *
 	 * @return	String		status output
 	 *
@@ -641,7 +641,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	}
 
 	/**
-	 * Trims the email addresses in a database table
+	 * Trims the e-mail addresses in a database table
 	 *
 	 * @param	String		name of the database table to use (should be tt_address or fe_users)
 	 *
@@ -695,7 +695,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	}
 
 	/**
-	 * Removes invalid email addresses in tt_address and fe_users
+	 * Removes invalid e-mail addresses in tt_address and fe_users
 	 *
 	 * @return	String		status output
 	 *
@@ -709,7 +709,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	}
 
 	/**
-	 * Removes invalid email addresses in a database table
+	 * Removes invalid e-mail addresses in a database table
 	 *
 	 * @param	String		name of the database table to use (should be tt_address or fe_users)
 	 *
