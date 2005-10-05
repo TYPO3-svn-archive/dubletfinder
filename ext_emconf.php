@@ -10,8 +10,8 @@
 ########################################################################
 
 $EM_CONF[$_EXTKEY] = Array (
-	'title' => 'Dublet Finder',
-	'description' => 'This extension finds entries from tt_address and fe_users that share the same e-mail address (dublets/duplicates/double entries) and deletes all but one (for each address), merging the flags in the process. The remaining entry is moved to a different page.',
+	'title' => 'Direct Mail Companion',
+	'description' => 'This extension helps you maintain your Direct Mail subscriber record. It can remove whitespace and quotes around e-mail addresses, delete records with an invalid or empty e-mail address and remove duplicates.',
 	'category' => 'module',
 	'shy' => 0,
 	'dependencies' => 'direct_mail',

@@ -13,8 +13,7 @@ Items to do:
 - use the group type of direct mail groups (fe_users, tt_address)
 - integrate the bo_dmail_cat_mgr into the extension
 - write a manual
-- publish this extension in the TER
-- add Boris Feldmann as member
+- add Boris Feldmann as member in the bugtracker and for CVS
 - add a benchmarking feature
 - add a feature to only process n duplicates (in order to avoid timeouts)
 - allow to (optionally) use subqueries from MySQL 4.1 to speed the search for cross-table duplicates up
@@ -25,5 +24,4 @@ Items to do:
 - investigate whether we can use TYPO3's feature to find subpages recursively
 - if not records apply to an operation, display a message instead of a heading with nothing beneath it
 - feature to remove entries with blank e-mail address
-- rename to "Direct Mail Maintenance" and rework the description
 - s/dublet/duplicate
