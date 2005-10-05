@@ -12,7 +12,6 @@ Items to do:
 - check write permissions for source and destination pages
 - use the group type of direct mail groups (fe_users, tt_address)
 - integrate the bo_dmail_cat_mgr into the extension
-- write a manual
 - add Boris Feldmann as member in the bugtracker and for CVS
 - add a benchmarking feature
 - add a feature to only process n duplicates (in order to avoid timeouts)
@@ -23,4 +22,4 @@ Items to do:
 - feature: check e-mail addresses for a MX entry for that domain
 - investigate whether we can use TYPO3's feature to find subpages recursively
 - if not records apply to an operation, display a message instead of a heading with nothing beneath it
-- feature to remove entries with blank e-mail address
+- rework which items are checked by default and which aren't
