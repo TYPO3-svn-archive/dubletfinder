@@ -7,10 +7,10 @@
 
 $LOCAL_LANG = Array (
 	'default' => Array (
-		'moduleFunction.tx_dubletfinder_modfunc1' => 'Dublet Finder',
+		'moduleFunction.tx_dubletfinder_modfunc1' => 'Direct Mail Companion',
 	),
 	'de' => Array (
-		'moduleFunction.tx_dubletfinder_modfunc1' => 'Dublettenfinder',
+		'moduleFunction.tx_dubletfinder_modfunc1' => 'Direct-Mail-Begleiter',
 	),
 );
 ?>
