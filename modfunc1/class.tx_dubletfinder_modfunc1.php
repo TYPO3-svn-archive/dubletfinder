@@ -58,6 +58,8 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	var $doTrim;
 	/** boolean: whether to delete obviously invalid e-mail addresses first */
 	var $doRemoveInvalid;
+	/** boolean: whether to delete empty e-mail addresses first */
+	var $doRemoveBlank;
 
 	function modMenu()	{
 		return Array(
@@ -96,6 +98,10 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 
 		if ($this->doRemoveInvalid) {
 			$output .= $this->removeInvalidEmail();
+		}
+
+		if ($this->doRemoveBlank) {
+			$output .= $this->removeBlankEmail();
 		}
 
 		if ($this->checkForm()) {
@@ -180,10 +186,12 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 
 		$this->doTrim = t3lib_div::GPvar('doTrim');
 		$this->doRemoveInvalid = t3lib_div::GPvar('doRemoveInvalid');
+		$this->doRemoveBlank = t3lib_div::GPvar('doRemoveBlank');
 
 		$output .= '<p>'.chr(10);
 		$output .= '<input type="checkbox" name="doTrim" id="doTrim" value="1"'.($this->doTrim ? ' checked="checked"' : '').' /><label for="doTrim"> '.$LANG->getLL('label_trim').'</label><br />'.chr(10);
-		$output .= '<input type="checkbox" name="doRemoveInvalid" id="doRemoveInvalid" value="1"'.($this->doRemoveInvalid ? ' checked="checked"' : '').' /><label for="doRemoveInvalid"> '.$LANG->getLL('label_deleteInvalid').'</label>'.chr(10);
+		$output .= '<input type="checkbox" name="doRemoveInvalid" id="doRemoveInvalid" value="1"'.($this->doRemoveInvalid ? ' checked="checked"' : '').' /><label for="doRemoveInvalid"> '.$LANG->getLL('label_deleteInvalid').'</label><br />'.chr(10);
+		$output .= '<input type="checkbox" name="doRemoveBlank" id="doRemoveBlank" value="1"'.($this->doRemoveBlank ? ' checked="checked"' : '').' /><label for="doRemoveBlank"> '.$LANG->getLL('label_deleteBlank').'</label>'.chr(10);
 		$output .= '</p>'.chr(10);
 
 		return $output;
@@ -702,7 +710,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	}
 
 	/**
-	 * Removes invalid e-mail addresses in tt_address and fe_users
+	 * Removes records with invalid e-mail addresses in tt_address and fe_users
 	 *
 	 * @return	String		status output
 	 *
@@ -716,7 +724,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	}
 
 	/**
-	 * Removes invalid e-mail addresses in a database table
+	 * Removes records with invalid e-mail addresses in a database table
 	 *
 	 * @param	String		name of the database table to use (should be tt_address or fe_users)
 	 *
@@ -769,6 +777,67 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 				}
 			}
 			$GLOBALS['TYPO3_DB']->sql_free_result($dbResult);
+		}
+
+		return $output;
+	}
+
+	/**
+	 * Removes records with blank e-mail addresses in tt_address and fe_users
+	 *
+	 * @return	String		status output
+	 *
+	 * @access private
+	 */
+	function removeBlankEmail() {
+		$output = $this->removeBlankEmailInTable('tt_address');
+		$output .= $this->removeBlankEmailInTable('fe_users');
+
+		return $output;
+	}
+
+	/**
+	 * Removes records with blank e-mail addresses in a database table
+	 *
+	 * @param	String		name of the database table to use (should be tt_address or fe_users)
+	 *
+	 * @return	String		status output
+	 *
+	 * @access private
+	 */
+	function removeBlankEmailInTable($tableName) {
+		global $LANG;
+
+		$output = '';
+
+	 	$dbResultCount = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+			'COUNT(*) AS numbers',
+			$tableName,
+			'email=\'\''
+				.' AND pid IN ('.$this->pageListRecursive.')'
+				.t3lib_pageSelect::enableFields($tableName),
+			'',
+			'',
+			''
+		);
+
+		if ($dbResultCount) {
+			$output .= '<h4>'.$LANG->getLL('heading_deleteBlankFromTable').' <code>'.$tableName.'</code>:</h4>'.chr(10);
+			$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResultCount);
+			$output .= '<p>'.$LANG->getLL('heading_thereAre').intval($row['numbers']).' '.$LANG->getLL('label_entriesWithEmptyEmail').'.</p>';
+			$GLOBALS['TYPO3_DB']->sql_free_result($dbResultCount);
+
+			if ($this->isLive()) {
+			 	$updateResult = $GLOBALS['TYPO3_DB']->exec_UPDATEquery(
+			 		$tableName,
+					'email=\'\''
+						.' AND pid IN ('.$this->pageListRecursive.')'
+						.t3lib_pageSelect::enableFields($tableName),
+					array(
+						'deleted' => 1,
+					)
+				);
+			}
 		}
 
 		return $output;
