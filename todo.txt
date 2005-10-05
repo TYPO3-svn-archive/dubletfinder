@@ -24,4 +24,3 @@ Items to do:
 - investigate whether we can use TYPO3's feature to find subpages recursively
 - if not records apply to an operation, display a message instead of a heading with nothing beneath it
 - feature to remove entries with blank e-mail address
-- s/dublet/duplicate

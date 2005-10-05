@@ -7,7 +7,7 @@
 
 $LOCAL_LANG = Array (
 	'default' => Array (
-		'title' => 'Dublet Finder',
+		'title' => 'Direct Mail Companion',
 
 		'label_modeDryrun' => 'Dry run: only search, don\'t actually change anything',
 		'label_modeLive' => 'Execture: search and write changes to DB',
@@ -45,7 +45,7 @@ $LOCAL_LANG = Array (
 
 		'verbose_whatHappens1' => 'This module looks for e-mail addresses that occur more than once in the selected Direct Mail groups (in the same group as well as across groups).',
 		'verbose_whatHappens2a' => 'This module modifies the records in the database tables <code>tt_address</code> and <code>fe_users</code>. One record per e-mail address will be moved to the currently selected page  (PID&nbsp;',
-		'verbose_whatHappens2b' => '), while the dublets will be marked as deleted. The Direct Mail categories of all records will be merged for this. If an e-mail address occurs in <code>fe_users</code> as well as in <code>tt_address</code>, only the records in <code>fe_user</code> will be kept.',
+		'verbose_whatHappens2b' => '), while the duplicates will be marked as deleted. The Direct Mail categories of all records will be merged for this. If an e-mail address occurs in <code>fe_users</code> as well as in <code>tt_address</code>, only the records in <code>fe_user</code> will be kept.',
 		'verbose_selectGroups' => 'Please select one or more Direct Mail groups which will be searched for duplicate addresses.',
 		'verbose_debugMode' => 'Here you can toggle the debug mode. When the debug mode is enabled, the module displays information that can help you in tracking down problems.',
 		'verbose_cleanUpEmail' => 'If you have imported e-mail address from another source, there might be whitespace (space, tabs, or linefeeds), quotes or &amp;nbsp; at the beginning or the end of the <code>email</code> field. This would mess up the search for duplicates. You can use this function to remove that whitespace first. In addition, you can have obviously invalid e-mail addresses deleted. Records with no e-mail addresses will not be deleted, though.',
@@ -56,7 +56,7 @@ $LOCAL_LANG = Array (
 	'dk' => Array (
 	),
 	'de' => Array (
-		'title' => 'Dublettenfinder',
+		'title' => 'Direct-Mail-Begleiter',
 
 		'label_modeDryrun' => 'Testlauf: nur suchen, nichts ändern',
 		'label_modeLive' => 'Ausführen: suchen und Änderungen in die DB schreiben',
