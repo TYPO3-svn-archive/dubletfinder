@@ -922,9 +922,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	 * Finds the subpages (recursively) of the pages in $this->pageList
 	 * and writes it to $this->pageListRecursive.
 	 *
-	 * @return	String		debug output (if debug mode is on)
+	 * @return	string		debug output (if debug mode is on)
 	 *
-	 * @access private
+	 * @access	private
 	 */
 	function createRecursivePageList() {
 		global $LANG;
