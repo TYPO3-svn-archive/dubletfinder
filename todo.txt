@@ -20,6 +20,23 @@ Items to do:
 - make the HTML output prettier
 - make the FE output prettier (with and without debug mode)
 - feature: check e-mail addresses for a MX entry for that domain
-- investigate whether we can use TYPO3's feature to find subpages recursively
+- investigate whether we can use TYPO3's feature to find subpages recursively (page->getMenu())
 - if not records apply to an operation, display a message instead of a heading with nothing beneath it
 - rework which items are checked by default and which aren't
+- feature to merge contents from the different DB fields for duplicates
+- don't use "" as e-mail address for the duplicate search
+- remove < and > from around e-mail addresses
+- document that the drop-down always jumps back to dryrun and that this is intended
+- document the drop-down in Web > Functions -> Direct Mail Companion
+- if the seminars extension is installed, rewire the attendance records if duplicates are deleted
+- display which mode (dryrun/live) has been used
+- after "live" mode, switch to "please select mode" instead of drydrun
+- merge values (e.g. name, password, phone number etc.) from duplicate records
+- if one fe_user record has a password and the other doesn't, keep the record with the password (or use the username from that record)
+- test with PHP 5
+- documentation: mention sponsorship (payment)
+- use OElib
+- change to getConfValue*/hasConfValue*
+- test with TYPO3 4
+- convert language files to XML
+- move to the "partner" framework
