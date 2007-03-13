@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<description></description>
+		<type>module</type>
+		<csh_table></csh_table>
+		<labelContext type="array">
+		</labelContext>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="title">Direct Mail Companion</label>
+			<label index="label_modeDryrun">Dry run: only search, don't actually change anything</label>
+			<label index="label_modeLive">Execture: search and write changes to DB</label>
+			<label index="label_debugMode">Enable debug mode</label>
+			<label index="label_trim">Trim whitespace, quotes and &amp;amp;nbsp; around e-mail addresses</label>
+			<label index="label_deleteInvalid">Delete records with obviously invalid e-mail addresses</label>
+			<label index="label_deleteBlank">Delete records with blank e-mail addresses</label>
+			<label index="label_useCross">Search for duplicates that occur in &lt;code&gt;fe_users&lt;/code&gt; as well as in &lt;code&gt;tt_address&lt;/code&gt;</label>
+			<label index="label_useFeUsers">Search for duplicates within &lt;code&gt;fe_users&lt;/code&gt;</label>
+			<label index="label_useAddress">Search for duplicates within &lt;code&gt;tt_address&lt;/code&gt;</label>
+			<label index="label_checkDeletedRecords">Eradicate &lt;strong&gt;not deleted&lt;/strong&gt; records from tt_address that have deleted records with the same e-mail address (ignoring hidden records)</label>
+			<label index="label_submit">Let's go!</label>
+			<label index="label_category">category</label>
+			<label index="label_combinedCategories">Combined categories</label>
+			<label index="label_keepUid">Keeping UID</label>
+			<label index="label_keepFeUsersUid">Keeping &lt;code&gt;fe_users&lt;/code&gt; UID</label>
+			<label index="label_deletingAllOthers">deleting all others</label>
+			<label index="label_deletingAllOthersFromBoth">deleting all others from &lt;code&gt;fe_users&lt;/code&gt; as well as &lt;code&gt;tt_address&lt;/code&gt;</label>
+			<label index="label_writingChangesTo">Writing changes to</label>
+			<label index="label_whereClause">WHERE clause</label>
+			<label index="label_pagesList">Pages in the Direct Mail groups</label>
+			<label index="label_pagesListRecursive">Recursive list of pages</label>
+			<label index="label_entriesWithEmptyEmail">records with empty e-mail addresses</label>
+			<label index="heading_whatHappens">What does this module do?</label>
+			<label index="heading_selectGroups">Select groups for the search</label>
+			<label index="heading_debugMode">Debug mode</label>
+			<label index="heading_cleanUpEmail">Clean up e-mail addresses</label>
+			<label index="heading_selectTables">Select database tables</label>
+			<label index="heading_results">Results</label>
+			<label index="heading_Details">Details</label>
+			<label index="heading_thereAre">There are</label>
+			<label index="heading_crossDublets">duplicates that occur in &lt;code&gt;fe_users&lt;/code&gt; as well as in &lt;code&gt;tt_address&lt;/code&gt;</label>
+			<label index="heading_FeUsersDublets">duplicates within &lt;code&gt;fe_users&lt;/code&gt;</label>
+			<label index="heading_AddressDublets">duplicates within &lt;code&gt;tt_address&lt;/code&gt;</label>
+			<label index="heading_trimTable">Trimming e-mail addresses in</label>
+			<label index="heading_deleteInvalidFromTable">Removing records with obviously invalid e-mail addresses in</label>
+			<label index="heading_deleteBlankFromTable">Removing records with blank e-mail addresses in</label>
+			<label index="heading_specialSelection">Special operations (dangerous)</label>
+			<label index="verbose_whatHappens1">This module looks for e-mail addresses that occur more than once in the selected Direct Mail groups (in the same group as well as across groups).</label>
+			<label index="verbose_whatHappens2a">This module modifies the records in the database tables &lt;code&gt;tt_address&lt;/code&gt; and &lt;code&gt;fe_users&lt;/code&gt;. One record per e-mail address will be moved to the currently selected page  (PID&amp;nbsp;</label>
+			<label index="verbose_whatHappens2b">), while the duplicates will be marked as deleted. The Direct Mail categories of all records will be merged for this. If an e-mail address occurs in &lt;code&gt;fe_users&lt;/code&gt; as well as in &lt;code&gt;tt_address&lt;/code&gt;, only the records in &lt;code&gt;fe_user&lt;/code&gt; will be kept.</label>
+			<label index="verbose_selectGroups">Please select one or more Direct Mail groups which will be searched for duplicate addresses.</label>
+			<label index="verbose_debugMode">Here you can toggle the debug mode. When the debug mode is enabled, the module displays information that can help you in tracking down problems.</label>
+			<label index="verbose_cleanUpEmail">If you have imported e-mail address from another source, there might be whitespace (space, tabs, or linefeeds), quotes or &amp;amp;nbsp; at the beginning or the end of the &lt;code&gt;email&lt;/code&gt; field. This would mess up the search for duplicates. You can use this function to remove that whitespace first. In addition, you can have obviously invalid e-mail addresses deleted. Records with no e-mail addresses will not be deleted, though.</label>
+			<label index="verbose_selectTables">Please select which tables should be searched for duplicates. If you want to find all duplicates, just leave all items checked.</label>
+			<label index="message_notCorrectlyDeleted">This record has not been deleted correctly from &lt;code&gt;tt_address&lt;/code&gt;!</label>
+		</languageKey>
+		<languageKey index="dk" type="array">
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="title">Direct-Mail-Begleiter</label>
+			<label index="label_modeDryrun">Testlauf: nur suchen, nichts ändern</label>
+			<label index="label_modeLive">Ausführen: suchen und Änderungen in die DB schreiben</label>
+			<label index="label_debugMode">Debug-Modus einschalten</label>
+			<label index="label_trim">Whitespace, Anführungszeichen und &amp;amp;nbsp; um E-Mail-Adressen entfernen</label>
+			<label index="label_deleteInvalid">Einträge mit offensichtlich ungültigen E-Mail-Adressen löschen</label>
+			<label index="label_deleteBlank">Einträge mit leeren E-Mail-Adressen löschen</label>
+			<label index="label_useCross">Dubletten suchen, die sowohl in &lt;code&gt;fe_users&lt;/code&gt; als auch in &lt;code&gt;tt_address&lt;/code&gt; vorkommen</label>
+			<label index="label_useFeUsers">Dubletten innerhalb von &lt;code&gt;fe_users&lt;/code&gt; suchen</label>
+			<label index="label_useAddress">Dubletten innerhalb von &lt;code&gt;tt_address&lt;/code&gt; suchen</label>
+			<label index="label_checkDeletedRecords">&lt;strong&gt;Existierende Datensätze&lt;/strong&gt; aus tt_address auslöschen, die als gelöscht markierte Datensätze mit der gleichen E-mail-Adresse haben (ignoriert versteckte Datensätze)</label>
+			<label index="label_submit">Los!</label>
+			<label index="label_category">Kategorie</label>
+			<label index="label_combinedCategories">Kombinierte Kategorien</label>
+			<label index="label_keepUid">Behalte UID</label>
+			<label index="label_keepFeUsersUid">Behalte &lt;code&gt;fe_users&lt;/code&gt;-UID</label>
+			<label index="label_deletingAllOthers">lösche alle anderen</label>
+			<label index="label_deletingAllOthersFromBoth">lösche alle anderen aus &lt;code&gt;fe_users&lt;/code&gt; sowie &lt;code&gt;tt_address&lt;/code&gt;</label>
+			<label index="label_writingChangesTo">Writing changes to</label>
+			<label index="label_whereClause">WHERE-Klausel</label>
+			<label index="label_pagesList">Seiten in den Direct-Mail-Gruppen</label>
+			<label index="label_pagesListRecursive">Rekursive Seitenliste</label>
+			<label index="label_entriesWithEmptyEmail">Einträge mit leeren E-Mail-Adressen</label>
+			<label index="heading_whatHappens">Was passiert in diesem Modul?</label>
+			<label index="heading_selectGroups">Gruppen für die Suche auswählen</label>
+			<label index="heading_debugMode">Debug-Modus einschalten</label>
+			<label index="heading_cleanUpEmail">E-Mail-Adressen bereinigen</label>
+			<label index="heading_selectTables">Datenbanktabellen auswählen</label>
+			<label index="heading_results">Ergebnisse</label>
+			<label index="heading_Details">Details</label>
+			<label index="heading_thereAre">Es gibt</label>
+			<label index="heading_crossDublets">Dublette(n), die sowohl in &lt;code&gt;fe_users&lt;/code&gt; als auch in &lt;code&gt;tt_address&lt;/code&gt; vorkommen</label>
+			<label index="heading_FeUsersDublets">Dublette(n) innerhalb von &lt;code&gt;fe_users&lt;/code&gt;</label>
+			<label index="heading_AddressDublets">Dublette(n) innerhalb von &lt;code&gt;tt_address&lt;/code&gt;</label>
+			<label index="heading_trimTable">Entferne unnötige Zeichen um E-Mail-Adressen in</label>
+			<label index="heading_deleteInvalidFromTable">Lösche Einträge mit offensichtlich ungültigen E-Mail-Adressen in</label>
+			<label index="heading_deleteBlankFromTable">Lösche Einträge mit leeren E-Mail-Adressen in</label>
+			<label index="heading_specialSelection">Spezial-Aktionen (gefährlich)</label>
+			<label index="verbose_whatHappens1">Dieses Modul sucht in den ausgewählten Direct-Mail-Gruppen nach mehrfach vorkommenden E-Mail-Adressen (sowohl innerhalb einer Gruppe als auch gruppenübergreifend).</label>
+			<label index="verbose_whatHappens2a">Dieses Modul verändert die Einträge in den Tabellen &lt;code&gt;tt_address&lt;/code&gt; und &lt;code&gt;fe_users&lt;/code&gt;. Ein Eintrag pro Adresse wird dann in die momentan ausgewählte Seite (PID&amp;nbsp;</label>
+			<label index="verbose_whatHappens2b">) verschoben, die anderen werden gelöscht. Dabei werden die Direct-Mail-Kategorien aller vorkommenden Einträge kombiniert. Wenn eine Adresse sowohl in &lt;code&gt;fe_users&lt;/code&gt; als auch in &lt;code&gt;tt_address&lt;/code&gt; vorkommt, bleibt nur der Eintrag in &lt;code&gt;fe_user&lt;/code&gt; erhalten.</label>
+			<label index="verbose_selectGroups">Bitte wählen Sie eine oder mehrere Direct-Mail-Gruppen aus, in denen nach mehrfach vorkommenden Einträgen gesucht werden soll.</label>
+			<label index="verbose_debugMode">Hier können Sie den Debug-Modus einschalten. Es werden dann Informationen angezeigt, die Ihnen helfen können, Fehler zu finden.</label>
+			<label index="verbose_cleanUpEmail">Wenn Sie E-Mail-Adressen von einer anderen Quelle importiert haben, kann es sein, dass sich Whitespace (Spaces, Tabs oder Zeilenumbrüche), Anführungszeichen oder &amp;amp;nbsp; am Anfang oder Ende des &lt;code&gt;email&lt;/code&gt;-Feldes befindet. Dies würde Probleme bei der Dubletten-Suche verursachen. Mit dieser Funktion können Sie den Whitespace automatisch vor der Suche entfernen. Weiterhin haben Sie die Möglichkeit, offensichtlich ungültige E-Mail-Adressen löschen zu lassen. Einträge mit leeren E-Mail-Adressen werden allerdings nicht gelöscht.</label>
+			<label index="verbose_selectTables">Bitte wählen Sie aus, in welchen Tabellen nach Dubletten gesucht werden soll. Wenn Sie alle möglichen Dubletten finden möchten, lassen Sie einfach alles angewählt.</label>
+			<label index="message_notCorrectlyDeleted">Dieser Datensatz wurde nicht korrekt aus &lt;code&gt;tt_address&lt;/code&gt; gelöscht!</label>
+		</languageKey>
+		<languageKey index="no" type="array">
+		</languageKey>
+		<languageKey index="it" type="array">
+		</languageKey>
+		<languageKey index="fr" type="array">
+		</languageKey>
+		<languageKey index="es" type="array">
+		</languageKey>
+		<languageKey index="nl" type="array">
+		</languageKey>
+		<languageKey index="cz" type="array">
+		</languageKey>
+		<languageKey index="pl" type="array">
+		</languageKey>
+		<languageKey index="si" type="array">
+		</languageKey>
+		<languageKey index="fi" type="array">
+		</languageKey>
+		<languageKey index="tr" type="array">
+		</languageKey>
+		<languageKey index="se" type="array">
+		</languageKey>
+		<languageKey index="pt" type="array">
+		</languageKey>
+		<languageKey index="ru" type="array">
+		</languageKey>
+		<languageKey index="ro" type="array">
+		</languageKey>
+		<languageKey index="ch" type="array">
+		</languageKey>
+		<languageKey index="sk" type="array">
+		</languageKey>
+		<languageKey index="lt" type="array">
+		</languageKey>
+		<languageKey index="is" type="array">
+		</languageKey>
+		<languageKey index="hr" type="array">
+		</languageKey>
+		<languageKey index="hu" type="array">
+		</languageKey>
+		<languageKey index="gl" type="array">
+		</languageKey>
+		<languageKey index="th" type="array">
+		</languageKey>
+		<languageKey index="gr" type="array">
+		</languageKey>
+		<languageKey index="hk" type="array">
+		</languageKey>
+		<languageKey index="eu" type="array">
+		</languageKey>
+		<languageKey index="bg" type="array">
+		</languageKey>
+		<languageKey index="br" type="array">
+		</languageKey>
+		<languageKey index="et" type="array">
+		</languageKey>
+		<languageKey index="ar" type="array">
+		</languageKey>
+		<languageKey index="he" type="array">
+		</languageKey>
+		<languageKey index="ua" type="array">
+		</languageKey>
+		<languageKey index="lv" type="array">
+		</languageKey>
+		<languageKey index="jp" type="array">
+		</languageKey>
+		<languageKey index="vn" type="array">
+		</languageKey>
+		<languageKey index="ca" type="array">
+		</languageKey>
+		<languageKey index="ba" type="array">
+		</languageKey>
+		<languageKey index="kr" type="array">
+		</languageKey>
+		<languageKey index="eo" type="array">
+		</languageKey>
+		<languageKey index="my" type="array">
+		</languageKey>
+	</data>
+	<orig_hash type="array">
+		<languageKey index="dk" type="array">
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="title" type="integer">80990423</label>
+			<label index="label_modeDryrun" type="integer">138212459</label>
+			<label index="label_modeLive" type="integer">142410862</label>
+			<label index="label_debugMode" type="integer">133660221</label>
+			<label index="label_trim" type="integer">38634492</label>
+			<label index="label_deleteInvalid" type="integer">180447139</label>
+			<label index="label_deleteBlank" type="integer">15338742</label>
+			<label index="label_useCross" type="integer">242743355</label>
+			<label index="label_useFeUsers" type="integer">226173240</label>
+			<label index="label_useAddress" type="integer">7461679</label>
+			<label index="label_submit" type="integer">104132544</label>
+			<label index="label_category" type="integer">206500690</label>
+			<label index="label_combinedCategories" type="integer">92197041</label>
+			<label index="label_keepUid" type="integer">84427622</label>
+			<label index="label_keepFeUsersUid" type="integer">254237676</label>
+			<label index="label_deletingAllOthers" type="integer">50815475</label>
+			<label index="label_deletingAllOthersFromBoth" type="integer">169527695</label>
+			<label index="label_writingChangesTo" type="integer">177837895</label>
+			<label index="label_whereClause" type="integer">116813456</label>
+			<label index="label_pagesList" type="integer">6827912</label>
+			<label index="label_pagesListRecursive" type="integer">17909238</label>
+			<label index="label_entriesWithEmptyEmail" type="integer">700290</label>
+			<label index="heading_whatHappens" type="integer">41688921</label>
+			<label index="heading_selectGroups" type="integer">123769242</label>
+			<label index="heading_debugMode" type="integer">247661194</label>
+			<label index="heading_cleanUpEmail" type="integer">101188227</label>
+			<label index="heading_selectTables" type="integer">171666211</label>
+			<label index="heading_results" type="integer">265722972</label>
+			<label index="heading_Details" type="integer">65812061</label>
+			<label index="heading_thereAre" type="integer">104168757</label>
+			<label index="heading_crossDublets" type="integer">238962954</label>
+			<label index="heading_FeUsersDublets" type="integer">164205113</label>
+			<label index="heading_AddressDublets" type="integer">92089520</label>
+			<label index="heading_trimTable" type="integer">26534670</label>
+			<label index="heading_deleteInvalidFromTable" type="integer">203174717</label>
+			<label index="heading_deleteBlankFromTable" type="integer">55580691</label>
+			<label index="verbose_whatHappens1" type="integer">182755617</label>
+			<label index="verbose_whatHappens2a" type="integer">10706712</label>
+			<label index="verbose_whatHappens2b" type="integer">61526783</label>
+			<label index="verbose_selectGroups" type="integer">135824885</label>
+			<label index="verbose_debugMode" type="integer">31501521</label>
+			<label index="verbose_cleanUpEmail" type="integer">235557601</label>
+			<label index="verbose_selectTables" type="integer">194057595</label>
+			<label index="message_notCorrectlyDeleted" type="integer">89296988</label>
+			<label index="label_checkDeletedRecords" type="integer">163192561</label>
+			<label index="heading_specialSelection" type="integer">131008597</label>
+		</languageKey>
+		<languageKey index="no" type="array">
+		</languageKey>
+		<languageKey index="it" type="array">
+		</languageKey>
+		<languageKey index="fr" type="array">
+		</languageKey>
+		<languageKey index="es" type="array">
+		</languageKey>
+		<languageKey index="nl" type="array">
+		</languageKey>
+		<languageKey index="cz" type="array">
+		</languageKey>
+		<languageKey index="pl" type="array">
+		</languageKey>
+		<languageKey index="si" type="array">
+		</languageKey>
+		<languageKey index="fi" type="array">
+		</languageKey>
+		<languageKey index="tr" type="array">
+		</languageKey>
+		<languageKey index="se" type="array">
+		</languageKey>
+		<languageKey index="pt" type="array">
+		</languageKey>
+		<languageKey index="ru" type="array">
+		</languageKey>
+		<languageKey index="ro" type="array">
+		</languageKey>
+		<languageKey index="ch" type="array">
+		</languageKey>
+		<languageKey index="sk" type="array">
+		</languageKey>
+		<languageKey index="lt" type="array">
+		</languageKey>
+		<languageKey index="is" type="array">
+		</languageKey>
+		<languageKey index="hr" type="array">
+		</languageKey>
+		<languageKey index="hu" type="array">
+		</languageKey>
+		<languageKey index="gl" type="array">
+		</languageKey>
+		<languageKey index="th" type="array">
+		</languageKey>
+		<languageKey index="gr" type="array">
+		</languageKey>
+		<languageKey index="hk" type="array">
+		</languageKey>
+		<languageKey index="eu" type="array">
+		</languageKey>
+		<languageKey index="bg" type="array">
+		</languageKey>
+		<languageKey index="br" type="array">
+		</languageKey>
+		<languageKey index="et" type="array">
+		</languageKey>
+		<languageKey index="ar" type="array">
+		</languageKey>
+		<languageKey index="he" type="array">
+		</languageKey>
+		<languageKey index="ua" type="array">
+		</languageKey>
+		<languageKey index="lv" type="array">
+		</languageKey>
+		<languageKey index="jp" type="array">
+		</languageKey>
+		<languageKey index="vn" type="array">
+		</languageKey>
+		<languageKey index="ca" type="array">
+		</languageKey>
+		<languageKey index="ba" type="array">
+		</languageKey>
+		<languageKey index="kr" type="array">
+		</languageKey>
+		<languageKey index="eo" type="array">
+		</languageKey>
+		<languageKey index="my" type="array">
+		</languageKey>
+	</orig_hash>
+	<orig_text type="array">
+		<languageKey index="dk" type="array">
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="title">Direct Mail Companion</label>
+			<label index="label_modeDryrun">Dry run: only search, don't actually change anything</label>
+			<label index="label_modeLive">Execture: search and write changes to DB</label>
+			<label index="label_debugMode">Enable debug mode</label>
+			<label index="label_trim">Trim whitespace, quotes and &amp;amp;nbsp; around e-mail addresses</label>
+			<label index="label_deleteInvalid">Delete records with obviously invalid e-mail addresses</label>
+			<label index="label_deleteBlank">Delete records with blank e-mail addresses</label>
+			<label index="label_useCross">Search for duplicates that occur in &lt;code&gt;fe_users&lt;/code&gt; as well as in &lt;code&gt;tt_address&lt;/code&gt;</label>
+			<label index="label_useFeUsers">Search for duplicates within &lt;code&gt;fe_users&lt;/code&gt;</label>
+			<label index="label_useAddress">Search for duplicates within &lt;code&gt;tt_address&lt;/code&gt;</label>
+			<label index="label_checkDeletedRecords">Eradicate &lt;strong&gt;not deleted&lt;/strong&gt; records from tt_address that have deleted records with the same e-mail address (ignoring hidden records)</label>
+			<label index="label_submit">Let's go!</label>
+			<label index="label_category">category</label>
+			<label index="label_combinedCategories">Combined categories</label>
+			<label index="label_keepUid">Keeping UID</label>
+			<label index="label_keepFeUsersUid">Keeping &lt;code&gt;fe_users&lt;/code&gt; UID</label>
+			<label index="label_deletingAllOthers">deleting all others</label>
+			<label index="label_deletingAllOthersFromBoth">deleting all others from &lt;code&gt;fe_users&lt;/code&gt; as well as &lt;code&gt;tt_address&lt;/code&gt;</label>
+			<label index="label_writingChangesTo">Writing changes to</label>
+			<label index="label_whereClause">WHERE clause</label>
+			<label index="label_pagesList">Pages in the Direct Mail groups</label>
+			<label index="label_pagesListRecursive">Recursive list of pages</label>
+			<label index="label_entriesWithEmptyEmail">records with empty e-mail addresses</label>
+			<label index="heading_whatHappens">What does this module do?</label>
+			<label index="heading_selectGroups">Select groups for the search</label>
+			<label index="heading_debugMode">Debug mode</label>
+			<label index="heading_cleanUpEmail">Clean up e-mail addresses</label>
+			<label index="heading_selectTables">Select database tables</label>
+			<label index="heading_results">Results</label>
+			<label index="heading_Details">Details</label>
+			<label index="heading_thereAre">There are</label>
+			<label index="heading_crossDublets">duplicates that occur in &lt;code&gt;fe_users&lt;/code&gt; as well as in &lt;code&gt;tt_address&lt;/code&gt;</label>
+			<label index="heading_FeUsersDublets">duplicates within &lt;code&gt;fe_users&lt;/code&gt;</label>
+			<label index="heading_AddressDublets">duplicates within &lt;code&gt;tt_address&lt;/code&gt;</label>
+			<label index="heading_trimTable">Trimming e-mail addresses in</label>
+			<label index="heading_deleteInvalidFromTable">Removing records with obviously invalid e-mail addresses in</label>
+			<label index="heading_deleteBlankFromTable">Removing records with blank e-mail addresses in</label>
+			<label index="heading_specialSelection">Special operations (dangerous)</label>
+			<label index="verbose_whatHappens1">This module looks for e-mail addresses that occur more than once in the selected Direct Mail groups (in the same group as well as across groups).</label>
+			<label index="verbose_whatHappens2a">This module modifies the records in the database tables &lt;code&gt;tt_address&lt;/code&gt; and &lt;code&gt;fe_users&lt;/code&gt;. One record per e-mail address will be moved to the currently selected page  (PID&amp;nbsp;</label>
+			<label index="verbose_whatHappens2b">), while the duplicates will be marked as deleted. The Direct Mail categories of all records will be merged for this. If an e-mail address occurs in &lt;code&gt;fe_users&lt;/code&gt; as well as in &lt;code&gt;tt_address&lt;/code&gt;, only the records in &lt;code&gt;fe_user&lt;/code&gt; will be kept.</label>
+			<label index="verbose_selectGroups">Please select one or more Direct Mail groups which will be searched for duplicate addresses.</label>
+			<label index="verbose_debugMode">Here you can toggle the debug mode. When the debug mode is enabled, the module displays information that can help you in tracking down problems.</label>
+			<label index="verbose_cleanUpEmail">If you have imported e-mail address from another source, there might be whitespace (space, tabs, or linefeeds), quotes or &amp;amp;nbsp; at the beginning or the end of the &lt;code&gt;email&lt;/code&gt; field. This would mess up the search for duplicates. You can use this function to remove that whitespace first. In addition, you can have obviously invalid e-mail addresses deleted. Records with no e-mail addresses will not be deleted, though.</label>
+			<label index="verbose_selectTables">Please select which tables should be searched for duplicates. If you want to find all duplicates, just leave all items checked.</label>
+			<label index="message_notCorrectlyDeleted">This record has not been deleted correctly from &lt;code&gt;tt_address&lt;/code&gt;!</label>
+		</languageKey>
+		<languageKey index="no" type="array">
+		</languageKey>
+		<languageKey index="it" type="array">
+		</languageKey>
+		<languageKey index="fr" type="array">
+		</languageKey>
+		<languageKey index="es" type="array">
+		</languageKey>
+		<languageKey index="nl" type="array">
+		</languageKey>
+		<languageKey index="cz" type="array">
+		</languageKey>
+		<languageKey index="pl" type="array">
+		</languageKey>
+		<languageKey index="si" type="array">
+		</languageKey>
+		<languageKey index="fi" type="array">
+		</languageKey>
+		<languageKey index="tr" type="array">
+		</languageKey>
+		<languageKey index="se" type="array">
+		</languageKey>
+		<languageKey index="pt" type="array">
+		</languageKey>
+		<languageKey index="ru" type="array">
+		</languageKey>
+		<languageKey index="ro" type="array">
+		</languageKey>
+		<languageKey index="ch" type="array">
+		</languageKey>
+		<languageKey index="sk" type="array">
+		</languageKey>
+		<languageKey index="lt" type="array">
+		</languageKey>
+		<languageKey index="is" type="array">
+		</languageKey>
+		<languageKey index="hr" type="array">
+		</languageKey>
+		<languageKey index="hu" type="array">
+		</languageKey>
+		<languageKey index="gl" type="array">
+		</languageKey>
+		<languageKey index="th" type="array">
+		</languageKey>
+		<languageKey index="gr" type="array">
+		</languageKey>
+		<languageKey index="hk" type="array">
+		</languageKey>
+		<languageKey index="eu" type="array">
+		</languageKey>
+		<languageKey index="bg" type="array">
+		</languageKey>
+		<languageKey index="br" type="array">
+		</languageKey>
+		<languageKey index="et" type="array">
+		</languageKey>
+		<languageKey index="ar" type="array">
+		</languageKey>
+		<languageKey index="he" type="array">
+		</languageKey>
+		<languageKey index="ua" type="array">
+		</languageKey>
+		<languageKey index="lv" type="array">
+		</languageKey>
+		<languageKey index="jp" type="array">
+		</languageKey>
+		<languageKey index="vn" type="array">
+		</languageKey>
+		<languageKey index="ca" type="array">
+		</languageKey>
+		<languageKey index="ba" type="array">
+		</languageKey>
+		<languageKey index="kr" type="array">
+		</languageKey>
+		<languageKey index="eo" type="array">
+		</languageKey>
+		<languageKey index="my" type="array">
+		</languageKey>
+	</orig_text>
+</T3locallang>
