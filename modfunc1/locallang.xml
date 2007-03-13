@@ -19,7 +19,7 @@
 			<label index="label_useCross">Search for duplicates that occur in &lt;code&gt;fe_users&lt;/code&gt; as well as in &lt;code&gt;tt_address&lt;/code&gt;</label>
 			<label index="label_useFeUsers">Search for duplicates within &lt;code&gt;fe_users&lt;/code&gt;</label>
 			<label index="label_useAddress">Search for duplicates within &lt;code&gt;tt_address&lt;/code&gt;</label>
-			<label index="label_checkDeletedRecords">Eradicate &lt;strong&gt;not deleted&lt;/strong&gt; records from tt_address that have deleted records with the same e-mail address (ignoring hidden records)</label>
+			<label index="label_checkDeletedRecords">Eradicate &lt;strong&gt;not deleted&lt;/strong&gt; records from tt_address that have deleted records with the same e-mail address</label>
 			<label index="label_submit">Let's go!</label>
 			<label index="label_category">category</label>
 			<label index="label_combinedCategories">Combined categories</label>
@@ -69,7 +69,7 @@
 			<label index="label_useCross">Dubletten suchen, die sowohl in &lt;code&gt;fe_users&lt;/code&gt; als auch in &lt;code&gt;tt_address&lt;/code&gt; vorkommen</label>
 			<label index="label_useFeUsers">Dubletten innerhalb von &lt;code&gt;fe_users&lt;/code&gt; suchen</label>
 			<label index="label_useAddress">Dubletten innerhalb von &lt;code&gt;tt_address&lt;/code&gt; suchen</label>
-			<label index="label_checkDeletedRecords">&lt;strong&gt;Existierende Datensätze&lt;/strong&gt; aus tt_address auslöschen, die als gelöscht markierte Datensätze mit der gleichen E-mail-Adresse haben (ignoriert versteckte Datensätze)</label>
+			<label index="label_checkDeletedRecords">&lt;strong&gt;Existierende Datensätze&lt;/strong&gt; aus tt_address auslöschen, die als gelöscht markierte Datensätze mit der gleichen E-mail-Adresse haben</label>
 			<label index="label_submit">Los!</label>
 			<label index="label_category">Kategorie</label>
 			<label index="label_combinedCategories">Kombinierte Kategorien</label>
@@ -233,7 +233,7 @@
 			<label index="verbose_cleanUpEmail" type="integer">235557601</label>
 			<label index="verbose_selectTables" type="integer">194057595</label>
 			<label index="message_notCorrectlyDeleted" type="integer">89296988</label>
-			<label index="label_checkDeletedRecords" type="integer">163192561</label>
+			<label index="label_checkDeletedRecords" type="integer">239520575</label>
 			<label index="heading_specialSelection" type="integer">131008597</label>
 		</languageKey>
 		<languageKey index="no" type="array">
@@ -329,7 +329,7 @@
 			<label index="label_useCross">Search for duplicates that occur in &lt;code&gt;fe_users&lt;/code&gt; as well as in &lt;code&gt;tt_address&lt;/code&gt;</label>
 			<label index="label_useFeUsers">Search for duplicates within &lt;code&gt;fe_users&lt;/code&gt;</label>
 			<label index="label_useAddress">Search for duplicates within &lt;code&gt;tt_address&lt;/code&gt;</label>
-			<label index="label_checkDeletedRecords">Eradicate &lt;strong&gt;not deleted&lt;/strong&gt; records from tt_address that have deleted records with the same e-mail address (ignoring hidden records)</label>
+			<label index="label_checkDeletedRecords">Eradicate &lt;strong&gt;not deleted&lt;/strong&gt; records from tt_address that have deleted records with the same e-mail address</label>
 			<label index="label_submit">Let's go!</label>
 			<label index="label_category">category</label>
 			<label index="label_combinedCategories">Combined categories</label>

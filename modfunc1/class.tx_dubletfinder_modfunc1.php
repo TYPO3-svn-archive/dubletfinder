@@ -51,6 +51,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	/** boolean: whether to check for dublets in tt_address */
 	var $useAddress;
 
+	/** boolean: whether to also check for deleted records */
+	var $checkDeletedRecords;
+
 	/** set to true to switch debug output on */
 	var $debug;
 
@@ -62,7 +65,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	var $doRemoveBlank;
 
 	function modMenu()	{
-		return Array(
+		return array(
 			'tx_dubletfinder_modfunc1_function' => '',
 		);
 	}
@@ -106,6 +109,10 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 
 		if ($this->checkForm()) {
 			$output .= $this->removeAllDublets();
+		}
+
+		if ($this->checkDeletedRecords) {
+			$output .= $this->removeRecordsWithDeletedDublets();
 		}
 
 		return $output;
@@ -219,11 +226,13 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 			$this->useCross = in_array('useCross', $useTables);
 			$this->useAddress = in_array('useAddress', $useTables);
 			$this->useFeUsers = in_array('useFeUsers', $useTables);
+			$this->checkDeletedRecords = in_array('checkDeletedRecords', $useTables);
 		} else {
-			// If the form has not been submitted yet, check everything by default.
+			// If the form has not been submitted yet, use default values.
 			$this->useCross = true;
 			$this->useAddress = true;
 			$this->useFeUsers = true;
+			$this->checkDeletedRecords = false;
 		}
 
 		$output .= '<p>'.chr(10);
@@ -231,6 +240,8 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 		$output .= '<input type="checkbox" name="useTables[]" id="useCross" value="useCross"'.($this->useCross ? ' checked="checked"' : '').' /><label for="useCross"> '.$LANG->getLL('label_useCross').'</label><br />'.chr(10);
 		$output .= '<input type="checkbox" name="useTables[]" id="useFeUsers" value="useFeUsers"'.($this->useFeUsers ? ' checked="checked"' : '').' /><label for="useFeUsers"> '.$LANG->getLL('label_useFeUsers').'</label><br />'.chr(10);
 		$output .= '<input type="checkbox" name="useTables[]" id="useAddress" value="useAddress"'.($this->useAddress ? ' checked="checked"' : '').' /><label for="useAddress"> '.$LANG->getLL('label_useAddress').'</label>'.chr(10);
+		$output .= '<h4>'.$LANG->getLL('heading_specialSelection').'</h4>'.chr(10);
+		$output .= '<input type="checkbox" name="useTables[]" id="checkDeletedRecords" value="checkDeletedRecords"'.($this->checkDeletedRecords ? ' checked="checked"' : '').' /><label for="checkDeletedRecords"> '.$LANG->getLL('label_checkDeletedRecords').'</label>'.chr(10);
 		$output .= '</p>'.chr(10);
 
 		return $output;
@@ -974,10 +985,96 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	 * (Taken from t3lib_db as this function has been introduced only in Typo3 3.8)
 	 *
 	 * @param	string		Input string
+	 *
 	 * @return	string		Output string; Wrapped in single quotes and quotes in the string (" / ') and \ will be backslashed (or otherwise based on DBAL handler)
 	 */
 	function fullQuoteStr($str)	{
 		return '\''.addslashes($str).'\'';
+	}
+
+	/**
+	 * Removes *undeleted* records from for which *deleted*
+	 * records with the same e-mail address exit.
+	 *
+	 * Note: This function will remove valid records!
+	 *
+	 * @param	string		name of the DB table to operate on (currently only tt_address is supported)
+	 *
+	 * @return	string		status output
+	 *
+	 * @access	private
+	 */
+	function removeRecordsWithDeletedDublets($tableName = 'tt_address') {
+		global $LANG;
+
+		$output = '<h4>'.$LANG->getLL('label_checkDeletedRecords').':</h4>'.chr(10);
+
+	 	$dbResult = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+			'email',
+			$tableName,
+			'pid IN ('.$this->pageListRecursive.') '
+				.'AND deleted=1'
+		);
+
+		$deletedEmails = array();
+
+		if ($dbResult) {
+			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
+				// Only add addresses without comma as we will be creating a
+				// comma-separated list of these addresses. 
+				if (strpos($row['email'], ',') == false) {
+					$deletedEmails[] = $this->fullQuoteStr($row['email']);
+				}
+			}
+			// remove duplicates
+			$deletedEmails = array_unique($deletedEmails);
+			$deletedEmailsCommaSeparated = implode(',', $deletedEmails);
+			if ($this->debug) {
+				$output .= '<p>'.$deletedEmailsCommaSeparated.'</p>'.chr(10);
+			}
+			$GLOBALS['TYPO3_DB']->sql_free_result($dbResult);
+		}
+
+		if (!empty($deletedEmailsCommaSeparated)) {
+			$counter = 0;
+
+		 	$dbResult = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+				'email',
+				$tableName,
+				'pid IN ('.$this->pageListRecursive.') '
+					.'AND deleted=0 '
+					.'AND email IN ('.$deletedEmailsCommaSeparated.')'
+			);
+			if ($this->debug) {
+				$output .= '<p>';
+			}
+			if ($dbResult) {
+				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
+					if ($this->debug) {
+						$output .= htmlspecialchars($row['email']).'<br />';
+					}
+					$counter++;
+				}
+				$GLOBALS['TYPO3_DB']->sql_free_result($dbResult);
+			}
+			if ($this->debug) {
+				$output .= '</p>'.chr(10);
+			}
+
+			if ($this->isLive()) {
+			 	$dbResult = $GLOBALS['TYPO3_DB']->exec_DELETEquery(
+					$tableName,
+					'pid IN ('.$this->pageListRecursive.') '
+						.'AND deleted=0 '
+						.'AND email IN ('.$deletedEmailsCommaSeparated.')'
+				);
+			}
+
+			$output .= '<p>'.$LANG->getLL('heading_thereAre').' '.$counter.'</p>'.chr(10);
+			
+		}
+
+		return $output;
 	}
 }
 
