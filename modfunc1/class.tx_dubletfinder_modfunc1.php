@@ -3,7 +3,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2005 Oliver Klee (typo3-coding@oliverklee.de)
+*  (c) 2005-2007 Oliver Klee (typo3-coding@oliverklee.de)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,9 +24,12 @@
 ***************************************************************/
 
 /**
- * Module extension (addition to function menu) 'Dublet Finder' for the 'dubletfinder' extension.
+ * Module extension (addition to function menu) 'Dublet Finder' for the
+ * 'dubletfinder' extension.
  *
- * @author	Oliver Klee <typo3-coding@oliverklee.de>
+ * @package		TYPO3
+ * @subpackage	tx_dubletfinder
+ * @author		Oliver Klee <typo3-coding@oliverklee.de>
  */
 
 require_once(PATH_t3lib.'class.t3lib_extobjbase.php');
@@ -45,28 +48,28 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	var $pageListRecursive = '';
 
 	/** boolean: whether to check for cross-entries in fe_users and tt_address */
-	var $useCross;
+	var $useCross = false;
 	/** boolean: whether to check for dublets in fe_users */
-	var $useFeUsers;
+	var $useFeUsers = false;
 	/** boolean: whether to check for dublets in tt_address */
-	var $useAddress;
+	var $useAddress = false;
 
 	/** boolean: whether to also check for deleted records */
-	var $checkDeletedRecords;
+	var $checkDeletedRecords = false;
 
 	/** set to true to switch debug output on */
-	var $debug;
+	var $debug = false;
 
 	/** boolean: whether to trim the e-mail addresses first */
-	var $doTrim;
+	var $doTrim = false;
 	/** boolean: whether to delete obviously invalid e-mail addresses first */
-	var $doRemoveInvalid;
+	var $doRemoveInvalid = false;
 	/** boolean: whether to delete empty e-mail addresses first */
-	var $doRemoveBlank;
+	var $doRemoveBlank = false;
 
 	function modMenu()	{
 		return array(
-			'tx_dubletfinder_modfunc1_function' => '',
+			'tx_dubletfinder_modfunc1_function' => ''
 		);
 	}
 
@@ -131,7 +134,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	 	$dbResult = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			'title, pages',
 			'sys_dmail_group',
-			'1'.t3lib_pageSelect::enableFields('sys_dmail_group'),
+			'1'.$this->enableFields('sys_dmail_group'),
 			'',
 			'',
 			''
@@ -262,7 +265,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 		if ($this->useCross) {
 			$dbResult = $this->getCrossDublets();
 			if ($dbResult) {
-				$output .= '<h4>'.$LANG->getLL('heading_thereAre').$GLOBALS['TYPO3_DB']->sql_num_rows($dbResult).$LANG->getLL('heading_crossDublets').':</h4>';
+				$output .= '<h4>'.$LANG->getLL('heading_thereAre').' '
+					.$GLOBALS['TYPO3_DB']->sql_num_rows($dbResult).' '
+					.$LANG->getLL('heading_crossDublets').':</h4>';
 
 				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
 					$output .= '<p>'.htmlentities($row['email']);
@@ -281,7 +286,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 		if ($this->useFeUsers) {
 			$dbResult = $this->getFeUsersDublets();
 			if ($dbResult) {
-				$output .= '<h4>'.$LANG->getLL('heading_thereAre').$GLOBALS['TYPO3_DB']->sql_num_rows($dbResult).$LANG->getLL('heading_FeUsersDublets').':</h4>';
+				$output .= '<h4>'.$LANG->getLL('heading_thereAre').' '
+					.$GLOBALS['TYPO3_DB']->sql_num_rows($dbResult).' '
+					.$LANG->getLL('heading_FeUsersDublets').':</h4>';
 
 				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
 					$output .= '<p>'.htmlentities($row['email']).' ('.intval($row['numbers']).')';
@@ -300,7 +307,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 		if ($this->useAddress) {
 			$dbResult = $this->getAddressDublets();
 			if ($dbResult) {
-				$output .= '<h4>'.$LANG->getLL('heading_thereAre').$GLOBALS['TYPO3_DB']->sql_num_rows($dbResult).$LANG->getLL('heading_AddressDublets').':</h4>';
+				$output .= '<h4>'.$LANG->getLL('heading_thereAre').' '
+					.$GLOBALS['TYPO3_DB']->sql_num_rows($dbResult).' '
+					.$LANG->getLL('heading_AddressDublets').':</h4>';
 
 				while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
 					$output .= '<p>'.htmlentities($row['email']).' ('.intval($row['numbers']).')';
@@ -331,7 +340,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 			'email, COUNT(email) AS numbers',
 			'fe_users',
 			'pid IN ('.$this->pageListRecursive.')'
-				.t3lib_pageSelect::enableFields('fe_users'),
+				.$this->enableFields('fe_users'),
 			'email HAVING numbers > 1',
 			'',
 			''
@@ -357,9 +366,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	 	$dbResult = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			'uid, pid, module_sys_dmail_category AS category',
 			'fe_users',
-			'email='.$this->fullQuoteStr($email)
+			'email='.$GLOBALS['TYPO3_DB']->fullQuoteStr($email)
 				.' AND pid IN ('.$this->pageListRecursive.')'
-				.t3lib_pageSelect::enableFields('fe_users'),
+				.$this->enableFields('fe_users'),
 			'',
 			'',
 			''
@@ -398,9 +407,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	 	$dbResult = $GLOBALS['TYPO3_DB']->exec_UPDATEquery(
 	 		'fe_users',
 			'uid!='.$firstUid
-				.' AND email='.$this->fullQuoteStr($email)
+				.' AND email='.$GLOBALS['TYPO3_DB']->fullQuoteStr($email)
 				.' AND pid IN ('.$this->pageListRecursive.')'
-				.t3lib_pageSelect::enableFields('fe_users'),
+				.$this->enableFields('fe_users'),
 			array(
 				'deleted' => 1,
 			)
@@ -421,7 +430,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 			'email, COUNT(email) AS numbers',
 			'tt_address',
 			'pid IN ('.$this->pageListRecursive.')'
-				.t3lib_pageSelect::enableFields('tt_address'),
+				.$this->enableFields('tt_address'),
 			'email HAVING numbers > 1',
 			'',
 			''
@@ -447,9 +456,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	 	$dbResult = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			'uid, pid, module_sys_dmail_category AS category',
 			'tt_address',
-			'email='.$this->fullQuoteStr($email)
+			'email='.$GLOBALS['TYPO3_DB']->fullQuoteStr($email)
 				.' AND pid IN ('.$this->pageListRecursive.')'
-				.t3lib_pageSelect::enableFields('tt_address'),
+				.$this->enableFields('tt_address'),
 			'',
 			'',
 			''
@@ -488,9 +497,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	 	$dbResult = $GLOBALS['TYPO3_DB']->exec_UPDATEquery(
 	 		'tt_address',
 			'uid!='.$firstUid
-				.' AND email='.$this->fullQuoteStr($email)
+				.' AND email='.$GLOBALS['TYPO3_DB']->fullQuoteStr($email)
 				.' AND pid IN ('.$this->pageListRecursive.')'
-				.t3lib_pageSelect::enableFields('tt_address'),
+				.$this->enableFields('tt_address'),
 			array(
 				'deleted' => 1,
 			)
@@ -512,8 +521,8 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 			'tt_address, fe_users',
 			'fe_users.email=tt_address.email'
 				.' AND fe_users.pid IN ('.$this->pageListRecursive.') AND tt_address.pid IN ('.$this->pageListRecursive.')'
-				.t3lib_pageSelect::enableFields('tt_address')
-				.t3lib_pageSelect::enableFields('fe_users'),
+				.$this->enableFields('tt_address')
+				.$this->enableFields('fe_users'),
 			'',
 			'',
 			''
@@ -539,9 +548,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	 	$dbResult = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			'uid, pid, module_sys_dmail_category AS category',
 			'fe_users',
-			'email='.$this->fullQuoteStr($email)
+			'email='.$GLOBALS['TYPO3_DB']->fullQuoteStr($email)
 				.' AND pid IN ('.$this->pageListRecursive.')'
-				.t3lib_pageSelect::enableFields('fe_users'),
+				.$this->enableFields('fe_users'),
 			'',
 			'',
 			''
@@ -563,9 +572,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 		 	$dbResult = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 				'uid, pid, module_sys_dmail_category AS category',
 				'tt_address',
-				'email='.$this->fullQuoteStr($email)
+				'email='.$GLOBALS['TYPO3_DB']->fullQuoteStr($email)
 					.' AND pid IN ('.$this->pageListRecursive.')'
-					.t3lib_pageSelect::enableFields('tt_address'),
+					.$this->enableFields('tt_address'),
 				'',
 				'',
 				''
@@ -598,9 +607,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 		 	$dbResult = $GLOBALS['TYPO3_DB']->exec_UPDATEquery(
 		 		'fe_users',
 				'uid!='.$firstUid
-					.' AND email='.$this->fullQuoteStr($email)
+					.' AND email='.$GLOBALS['TYPO3_DB']->fullQuoteStr($email)
 					.' AND pid IN ('.$this->pageListRecursive.')'
-					.t3lib_pageSelect::enableFields('fe_users'),
+					.$this->enableFields('fe_users'),
 				array(
 					'deleted' => 1,
 				)
@@ -608,17 +617,17 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 
 			if ($this->debug) {
 				$output .= '<br /><strong>'.$LANG->getLL('label_whereClause').': </strong>';
-				$output .= htmlentities('email='.$this->fullQuoteStr($email)
+				$output .= htmlentities('email='.$GLOBALS['TYPO3_DB']->fullQuoteStr($email)
 						.' AND pid IN ('.$this->pageListRecursive.')'
-						.t3lib_pageSelect::enableFields('tt_address'))
+						.$this->enableFields('tt_address'))
 						.'<br /><br />';
 			}
 			// delete all other occurences in tt_address
 		 	$dbResult = $GLOBALS['TYPO3_DB']->exec_UPDATEquery(
 		 		'tt_address',
-				'email='.$this->fullQuoteStr($email)
+				'email='.$GLOBALS['TYPO3_DB']->fullQuoteStr($email)
 					.' AND pid IN ('.$this->pageListRecursive.')'
-					.t3lib_pageSelect::enableFields('tt_address'),
+					.$this->enableFields('tt_address'),
 				array(
 					'deleted' => 1,
 				)
@@ -628,9 +637,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 				$dbResult = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 					'email',
 					'tt_address',
-					'email='.$this->fullQuoteStr($email)
+					'email='.$GLOBALS['TYPO3_DB']->fullQuoteStr($email)
 						.' AND pid IN ('.$this->pageListRecursive.')'
-						.t3lib_pageSelect::enableFields('tt_address'),
+						.$this->enableFields('tt_address'),
 					'',
 					'',
 					''
@@ -678,7 +687,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 			'uid, email',
 			$tableName,
 			'pid IN ('.$this->pageListRecursive.')'
-				.t3lib_pageSelect::enableFields($tableName),
+				.$this->enableFields($tableName),
 			'',
 			'',
 			''
@@ -692,9 +701,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 				$trimmedEmail = trim($currentEmail);
 				$matches = array();
 				if (preg_match($regex, $trimmedEmail, $matches)) {
-					$betterTrimmedEmail = $matches[3]; 
+					$betterTrimmedEmail = $matches[3];
 				} else {
-					$betterTrimmedEmail = $trimmedEmail; 
+					$betterTrimmedEmail = $trimmedEmail;
 				}
 
 				if ($currentEmail !== $betterTrimmedEmail) {
@@ -753,7 +762,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 			'uid, email',
 			$tableName,
 			'pid IN ('.$this->pageListRecursive.')'
-				.t3lib_pageSelect::enableFields($tableName),
+				.$this->enableFields($tableName),
 			'',
 			'',
 			''
@@ -826,7 +835,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 			$tableName,
 			'email=\'\''
 				.' AND pid IN ('.$this->pageListRecursive.')'
-				.t3lib_pageSelect::enableFields($tableName),
+				.$this->enableFields($tableName),
 			'',
 			'',
 			''
@@ -835,7 +844,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 		if ($dbResultCount) {
 			$output .= '<h4>'.$LANG->getLL('heading_deleteBlankFromTable').' <code>'.$tableName.'</code>:</h4>'.chr(10);
 			$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResultCount);
-			$output .= '<p>'.$LANG->getLL('heading_thereAre').intval($row['numbers']).' '.$LANG->getLL('label_entriesWithEmptyEmail').'.</p>';
+			$output .= '<p>'.$LANG->getLL('heading_thereAre').' '
+				.intval($row['numbers']).' '
+				.$LANG->getLL('label_entriesWithEmptyEmail').'.</p>';
 			$GLOBALS['TYPO3_DB']->sql_free_result($dbResultCount);
 
 			if ($this->isLive()) {
@@ -843,7 +854,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 			 		$tableName,
 					'email=\'\''
 						.' AND pid IN ('.$this->pageListRecursive.')'
-						.t3lib_pageSelect::enableFields($tableName),
+						.$this->enableFields($tableName),
 					array(
 						'deleted' => 1,
 					)
@@ -951,7 +962,7 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 				'pages',
 				'pid!=0'
 					.' AND pid IN ('.$currentPageList.')'
-					.t3lib_pageSelect::enableFields('pages'),
+					.$this->enableFields('pages'),
 				'',
 				'',
 				''
@@ -981,24 +992,13 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	}
 
 	/**
-	 * Escaping and quoting values for SQL statements.
-	 * (Taken from t3lib_db as this function has been introduced only in Typo3 3.8)
-	 *
-	 * @param	string		Input string
-	 *
-	 * @return	string		Output string; Wrapped in single quotes and quotes in the string (" / ') and \ will be backslashed (or otherwise based on DBAL handler)
-	 */
-	function fullQuoteStr($str)	{
-		return '\''.addslashes($str).'\'';
-	}
-
-	/**
 	 * Removes *undeleted* records from for which *deleted*
 	 * records with the same e-mail address exit.
 	 *
 	 * Note: This function will remove valid records!
 	 *
-	 * @param	string		name of the DB table to operate on (currently only tt_address is supported)
+	 * @param	string		name of the DB table to operate on (currently only
+	 * 						tt_address is supported)
 	 *
 	 * @return	string		status output
 	 *
@@ -1007,7 +1007,8 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 	function removeRecordsWithDeletedDublets($tableName = 'tt_address') {
 		global $LANG;
 
-		$output = '<h4>'.$LANG->getLL('label_checkDeletedRecords').':</h4>'.chr(10);
+		$output = '<h4>'.$LANG->getLL('label_checkDeletedRecords').':</h4>'
+			.chr(10);
 
 	 	$dbResult = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			'email',
@@ -1021,9 +1022,9 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 		if ($dbResult) {
 			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($dbResult)) {
 				// Only add addresses without comma as we will be creating a
-				// comma-separated list of these addresses. 
+				// comma-separated list of these addresses.
 				if (strpos($row['email'], ',') == false) {
-					$deletedEmails[] = $this->fullQuoteStr($row['email']);
+					$deletedEmails[] = $GLOBALS['TYPO3_DB']->fullQuoteStr($row['email']);
 				}
 			}
 			// remove duplicates
@@ -1070,11 +1071,58 @@ class tx_dubletfinder_modfunc1 extends t3lib_extobjbase {
 				);
 			}
 
-			$output .= '<p>'.$LANG->getLL('heading_thereAre').' '.$counter.'</p>'.chr(10);
-			
+			$output .= '<p>'.$LANG->getLL('heading_thereAre').' '.$counter.'</p>'
+				.chr(10);
+
 		}
 
 		return $output;
+	}
+
+	/**
+	 * Wrapper function for t3lib_pageSelect::enableFields() since it is no longer
+	 * accessible statically.
+	 *
+	 * Returns a part of a WHERE clause which will filter out records with start/end
+	 * times or deleted/hidden/fe_groups fields set to values that should de-select
+	 * them according to the current time, preview settings or user login.
+	 * Is using the $TCA arrays "ctrl" part where the key "enablefields" determines
+	 * for each table which of these features applies to that table.
+	 *
+	 * @param	string		table name found in the $TCA array
+	 * @param	integer		If $show_hidden is set (0/1), any hidden-fields in
+	 * 						records are ignored. NOTICE: If you call this function,
+	 * 						consider what to do with the show_hidden parameter.
+	 * 						Maybe it should be set? See tslib_cObj->enableFields
+	 * 						where it's implemented correctly.
+	 * @param	array		Array you can pass where keys can be "disabled",
+	 * 						"starttime", "endtime", "fe_group" (keys from
+	 * 						"enablefields" in TCA) and if set they will make sure
+	 * 						that part of the clause is not added. Thus disables
+	 * 						the specific part of the clause. For previewing etc.
+	 * @param	boolean		If set, enableFields will be applied regardless of
+	 * 						any versioning preview settings which might otherwise
+	 * 						disable enableFields.
+	 * @return	string		the clause starting like " AND ...=... AND ...=..."
+	 *
+	 * @access	protected
+	 */
+	function enableFields($table, $show_hidden = -1, $ignore_array = array(),
+		$noVersionPreview = false
+	) {
+		// We need to use an array as the singleton otherwise won't work.
+		static $pageCache = array();
+
+		if (!$pageCache[0]) {
+			$pageCache[0] = t3lib_div::makeInstance('t3lib_pageSelect');
+		}
+
+		return $pageCache[0]->enableFields(
+			$table,
+			$show_hidden,
+			$ignore_array,
+			$noVersionPreview
+		);
 	}
 }
 
