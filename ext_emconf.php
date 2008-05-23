@@ -16,7 +16,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'category' => 'module',
 	'shy' => 0,
 	'dependencies' => 'cms,direct_mail',
-	'conflicts' => '',
+	'conflicts' => 'dbal',
 	'priority' => '',
 	'loadOrder' => '',
 	'module' => '',
@@ -29,7 +29,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'lockType' => '',
 	'author' => 'Oliver Klee',
 	'author_email' => 'typo3-coding@oliverklee.de',
-	'author_company' => '',
+	'author_company' => 'oliverklee.de',
 	'CGLcompliance' => '',
 	'CGLcompliance_note' => '',
 	'version' => '0.4.0',
@@ -41,6 +41,7 @@ $EM_CONF[$_EXTKEY] = array(
 			'typo3' => '4.0.0-0.0.0',
 		),
 		'conflicts' => array(
+			'dbal' => '',
 		),
 		'suggests' => array(
 		),
