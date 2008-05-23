@@ -3,7 +3,7 @@
 ########################################################################
 # Extension Manager/Repository config file for ext: "dubletfinder"
 #
-# Auto generated 27-09-2007 00:10
+# Auto generated 23-05-2008 23:12
 #
 # Manual updates:
 # Only the data in the array - anything else is removed by next write.
@@ -32,8 +32,8 @@ $EM_CONF[$_EXTKEY] = array(
 	'author_company' => 'oliverklee.de',
 	'CGLcompliance' => '',
 	'CGLcompliance_note' => '',
-	'version' => '0.4.0',
-	'_md5_values_when_last_written' => 'a:7:{s:12:"ext_icon.gif";s:4:"1bdc";s:14:"ext_tables.php";s:4:"e791";s:16:"locallang_db.xml";s:4:"0c0b";s:8:"todo.txt";s:4:"a00f";s:43:"modfunc1/class.tx_dubletfinder_modfunc1.php";s:4:"f4b2";s:22:"modfunc1/locallang.xml";s:4:"cbd4";s:14:"doc/manual.sxw";s:4:"49ba";}',
+	'version' => '0.5.0',
+	'_md5_values_when_last_written' => 'a:7:{s:12:"ext_icon.gif";s:4:"1bdc";s:14:"ext_tables.php";s:4:"e791";s:16:"locallang_db.xml";s:4:"0c0b";s:8:"todo.txt";s:4:"a00f";s:43:"modfunc1/class.tx_dubletfinder_modfunc1.php";s:4:"f4b2";s:22:"modfunc1/locallang.xml";s:4:"cbd4";s:14:"doc/manual.sxw";s:4:"238d";}',
 	'constraints' => array(
 		'depends' => array(
 			'cms' => '',
