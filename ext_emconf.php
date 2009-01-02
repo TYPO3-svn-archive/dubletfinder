@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Direct Mail Companion',
-	'description' => 'This extension helps you maintain your Direct Mail subscriber records. It can remove whitespace and quotes around e-mail addresses, delete records with an invalid or empty e-mail address and remove duplicates.',
+	'description' => 'This extension is no longer maintained. (It helps you maintain your Direct Mail subscriber records. It can remove whitespace and quotes around e-mail addresses, delete records with an invalid or empty e-mail address and remove duplicates.)',
 	'category' => 'module',
 	'shy' => 0,
 	'dependencies' => 'cms,direct_mail',
@@ -20,7 +20,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'priority' => '',
 	'loadOrder' => '',
 	'module' => '',
-	'state' => 'alpha',
+	'state' => 'obsolete',
 	'internal' => 0,
 	'uploadfolder' => 0,
 	'createDirs' => '',
